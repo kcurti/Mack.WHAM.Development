@@ -1,0 +1,315 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{caption,graphics}
+\usepackage{makecell}
+\usepackage{lscape}
+\renewcommand\figurename{Fig.}
+\captionsetup{labelsep=period, singlelinecheck=false}
+\newcommand{\changesize}[1]{\fontsize{#1pt}{#1pt}\selectfont}
+\renewcommand{\arraystretch}{1.5}
+\renewcommand\theadfont{}
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  pdftitle={WHAM output tables},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{WHAM output tables}
+\author{}
+\date{\vspace{-2.5em}}
+
+\begin{document}
+\maketitle
+
+\begin{landscape}
+\begin{longtable}[t]{lrrrr}
+\caption{\label{tab:par-table}Parameter estimates, standard errors, and confidence intervals. Rounded to 3 decimal places.}\\
+\toprule
+  & Estimate & Std. Error & 95\% CI lower & 95\% CI upper\\
+\midrule
+\endfirsthead
+\caption[]{Parameter estimates, standard errors, and confidence intervals. Rounded to 3 decimal places. \textit{(continued)}}\\
+\toprule
+  & Estimate & Std. Error & 95\% CI lower & 95\% CI upper\\
+\midrule
+\endhead
+
+\endfoot
+\bottomrule
+\endlastfoot
+B-H a & 17.224 & 9.798 & 5.648 & 52.522\\
+B-H b & 0.000 & 0.000 & 0.000 & 0.000\\
+NAA $\sigma$ (age 1) & 1.103 & 0.114 & 0.900 & 1.350\\
+NAA residual AR1 $\rho$ year & 0.000 & -- & -- & --\\
+Index 1 fully selected q & 0.004 & 0.001 & 0.003 & 0.005\\
+\addlinespace
+Index 2 fully selected q & 0.000 & 0.000 & 0.000 & 0.000\\
+Index 3 fully selected q & 0.000 & 0.000 & 0.000 & 0.000\\
+Block 1: $a_{50}$ & 1.097 & 1.701 & 0.040 & 7.892\\
+Block 1: 1/slope (increasing) & 0.045 & 0.780 & 0.000 & 10.000\\
+Block 2: Selectivity for age 1 & 1.000 & -- & -- & --\\
+\addlinespace
+Block 2: Selectivity for age 2 & 1.000 & -- & -- & --\\
+Block 2: Selectivity for age 3 & 1.000 & -- & -- & --\\
+Block 2: Selectivity for age 4 & 1.000 & -- & -- & --\\
+Block 2: Selectivity for age 5 & 1.000 & -- & -- & --\\
+Block 2: Selectivity for age 6 & 1.000 & -- & -- & --\\
+\addlinespace
+Block 2: Selectivity for age 7 & 1.000 & -- & -- & --\\
+Block 2: Selectivity for age 8 & 1.000 & -- & -- & --\\
+Block 2: Selectivity for age 9 & 1.000 & -- & -- & --\\
+Block 2: Selectivity for age 10+ & 1.000 & -- & -- & --\\
+Block 3: Selectivity for age 1 & 0.000 & -- & -- & --\\
+\addlinespace
+Block 3: Selectivity for age 2 & 0.000 & -- & -- & --\\
+Block 3: Selectivity for age 3 & 1.000 & -- & -- & --\\
+Block 3: Selectivity for age 4 & 0.544 & 0.230 & 0.162 & 0.881\\
+Block 3: Selectivity for age 5 & 0.306 & 0.132 & 0.115 & 0.599\\
+Block 3: Selectivity for age 6 & 0.318 & 0.108 & 0.149 & 0.553\\
+\addlinespace
+Block 3: Selectivity for age 7 & 0.000 & -- & -- & --\\
+Block 3: Selectivity for age 8 & 0.000 & -- & -- & --\\
+Block 3: Selectivity for age 9 & 0.000 & -- & -- & --\\
+Block 3: Selectivity for age 10+ & 0.000 & -- & -- & --\\
+Block 4: Selectivity for age 1 & 0.000 & -- & -- & --\\
+\addlinespace
+Block 4: Selectivity for age 2 & 0.000 & -- & -- & --\\
+Block 4: Selectivity for age 3 & 1.000 & -- & -- & --\\
+Block 4: Selectivity for age 4 & 0.750 & 0.197 & 0.276 & 0.959\\
+Block 4: Selectivity for age 5 & 0.583 & 0.145 & 0.303 & 0.818\\
+Block 4: Selectivity for age 6 & 0.565 & 0.110 & 0.351 & 0.757\\
+\addlinespace
+Block 4: Selectivity for age 7 & 0.000 & -- & -- & --\\
+Block 4: Selectivity for age 8 & 0.000 & -- & -- & --\\
+Block 4: Selectivity for age 9 & 0.000 & -- & -- & --\\
+Block 4: Selectivity for age 10+ & 0.000 & -- & -- & --\\
+Fleet 1 age comp, logistic-normal: $\sigma$ & 15.814 & 0.545 & 14.780 & 16.920\\
+\addlinespace
+Index 2 age comp, logistic-normal: $\sigma$ & 52.205 & 6.876 & 40.327 & 67.580\\
+Index 3 age comp, logistic-normal: $\sigma$ & 15.330 & 1.384 & 12.844 & 18.297\\*
+\end{longtable}
+\end{landscape}
+
+\begin{longtable}[t]{lrrrrrrrrrr}
+\caption{\label{tab:NAA-table}Abundance at age (1000s).}\\
+\toprule
+  & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10+\\
+\midrule
+\endfirsthead
+\caption[]{Abundance at age (1000s). \textit{(continued)}}\\
+\toprule
+  & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10+\\
+\midrule
+\endhead
+
+\endfoot
+\bottomrule
+\endlastfoot
+1968 & 4390026 & 1475877 & 245960 & 64409 & 35927 & 30659 & 24029 & 9757 & 73609 & 770\\
+1969 & 1845202 & 3530200 & 1012032 & 168659 & 44166 & 24636 & 21023 & 16477 & 6691 & 51003\\
+1970 & 2652709 & 1491037 & 2539644 & 728061 & 121334 & 31774 & 17723 & 15124 & 11854 & 41505\\
+1971 & 926996 & 2124628 & 982849 & 1674060 & 479917 & 79980 & 20944 & 11683 & 9969 & 35172\\
+1972 & 848364 & 734011 & 1251098 & 578756 & 985779 & 282602 & 47097 & 12333 & 6879 & 26582\\
+\addlinespace
+1973 & 1077652 & 668184 & 410131 & 699054 & 323381 & 550807 & 157904 & 26315 & 6891 & 18697\\
+1974 & 1694364 & 830342 & 300677 & 184555 & 314569 & 145519 & 247858 & 71056 & 11842 & 11514\\
+1975 & 1398779 & 1289823 & 331622 & 120084 & 73708 & 125633 & 58117 & 98990 & 28378 & 9328\\
+1976 & 164522 & 1062393 & 503714 & 129508 & 46897 & 28785 & 49063 & 22697 & 38658 & 14725\\
+1977 & 46460 & 123787 & 378156 & 179296 & 46098 & 16693 & 10246 & 17464 & 8079 & 19002\\
+\addlinespace
+1978 & 22111 & 36676 & 70741 & 216105 & 102462 & 26344 & 9539 & 5855 & 9980 & 15476\\
+1979 & 75189 & 17844 & 26052 & 50249 & 153503 & 72781 & 18712 & 6776 & 4159 & 18082\\
+1980 & 27593 & 60339 & 11991 & 17506 & 33766 & 103151 & 48907 & 12574 & 4553 & 14945\\
+1981 & 105049 & 22206 & 41700 & 8287 & 12098 & 23336 & 71287 & 33800 & 8690 & 13476\\
+1982 & 269417 & 83845 & 14146 & 26564 & 5279 & 7707 & 14865 & 45412 & 21531 & 14120\\
+\addlinespace
+1983 & 1872316 & 214977 & 53264 & 8986 & 16875 & 3353 & 4896 & 9443 & 28849 & 22648\\
+1984 & 69682 & 1497606 & 139869 & 34655 & 5847 & 10980 & 2182 & 3185 & 6144 & 33505\\
+1985 & 139287 & 56472 & 1108724 & 103550 & 25656 & 4329 & 8128 & 1615 & 2358 & 29354\\
+1986 & 104371 & 111810 & 38060 & 747236 & 69788 & 17291 & 2917 & 5478 & 1089 & 21373\\
+1987 & 96155 & 83571 & 73505 & 25021 & 491240 & 45880 & 11367 & 1918 & 3601 & 14766\\
+\addlinespace
+1988 & 390389 & 76028 & 48522 & 42678 & 14527 & 285220 & 26638 & 6600 & 1114 & 10665\\
+1989 & 631906 & 303840 & 37779 & 24111 & 21207 & 7219 & 141730 & 13237 & 3280 & 5853\\
+1990 & 126725 & 494892 & 160567 & 19965 & 12742 & 11207 & 3815 & 74898 & 6995 & 4826\\
+1991 & 230927 & 98449 & 241494 & 78352 & 9742 & 6218 & 5469 & 1862 & 36548 & 5768\\
+1992 & 146392 & 179886 & 49340 & 121030 & 39268 & 4883 & 3116 & 2741 & 933 & 21208\\
+\addlinespace
+1993 & 54972 & 115630 & 103386 & 28357 & 69560 & 22568 & 2806 & 1791 & 1575 & 12725\\
+1994 & 141161 & 43327 & 65052 & 58163 & 15953 & 39133 & 12697 & 1579 & 1008 & 8045\\
+1995 & 62699 & 108971 & 19862 & 29822 & 26664 & 7313 & 17940 & 5821 & 724 & 4150\\
+1996 & 333134 & 48887 & 55119 & 10047 & 15084 & 13487 & 3699 & 9074 & 2944 & 2465\\
+1997 & 138985 & 241403 & 12011 & 13542 & 2468 & 3706 & 3314 & 909 & 2229 & 1329\\
+\addlinespace
+1998 & 75111 & 106081 & 98955 & 4924 & 5551 & 1012 & 1519 & 1358 & 373 & 1459\\
+1999 & 102586 & 56431 & 37214 & 34714 & 1727 & 1947 & 355 & 533 & 476 & 642\\
+2000 & 1172444 & 71571 & 9538 & 6290 & 5867 & 292 & 329 & 60 & 90 & 189\\
+2001 & 156787 & 887726 & 27107 & 3612 & 2382 & 2222 & 111 & 125 & 23 & 106\\
+2002 & 130167 & 125672 & 589639 & 18005 & 2399 & 1582 & 1476 & 73 & 83 & 85\\
+\addlinespace
+2003 & 491423 & 102612 & 70836 & 332353 & 10149 & 1352 & 892 & 832 & 41 & 95\\
+2004 & 685693 & 377987 & 45388 & 31332 & 147007 & 4489 & 598 & 395 & 368 & 60\\
+2005 & 315087 & 509534 & 118995 & 14289 & 9864 & 46280 & 1413 & 188 & 124 & 135\\
+2006 & 519325 & 237588 & 185287 & 43271 & 5196 & 3587 & 16829 & 514 & 68 & 94\\
+2007 & 163802 & 370262 & 49734 & 38786 & 9058 & 1088 & 751 & 3523 & 108 & 34\\
+\addlinespace
+2008 & 354967 & 121034 & 110243 & 14808 & 11548 & 2697 & 324 & 224 & 1049 & 42\\
+2009 & 191363 & 255633 & 27972 & 25478 & 3422 & 2669 & 623 & 75 & 52 & 252\\
+2010 & 74238 & 132819 & 41059 & 4493 & 4092 & 550 & 429 & 100 & 12 & 49\\
+2011 & 126959 & 47609 & 9782 & 3024 & 331 & 301 & 40 & 32 & 7 & 4\\
+2012 & 90337 & 85623 & 5760 & 1184 & 366 & 40 & 36 & 5 & 4 & 1\\
+\addlinespace
+2013 & 75232 & 64780 & 18973 & 1276 & 262 & 81 & 9 & 8 & 1 & 1\\
+2014 & 76740 & 53778 & 13914 & 4075 & 274 & 56 & 17 & 2 & 2 & 0\\
+2015 & 132250 & 54910 & 11663 & 3018 & 884 & 59 & 12 & 4 & 0 & 0\\
+2016 & 255974 & 95647 & 13233 & 2811 & 727 & 213 & 14 & 3 & 1 & 0\\
+2017 & 41592 & 192522 & 33915 & 4692 & 997 & 258 & 76 & 5 & 1 & 0\\
+\addlinespace
+2018 & 130365 & 31851 & 81565 & 14369 & 1988 & 422 & 109 & 32 & 2 & 1\\
+2019 & 80911 & 96204 & 9365 & 23981 & 4225 & 584 & 124 & 32 & 9 & 1\\
+2020 & 77182 & 61598 & 38452 & 3743 & 9585 & 1689 & 234 & 50 & 13 & 4\\
+2021 & 65360 & 57000 & 18246 & 11390 & 1109 & 2839 & 500 & 69 & 15 & 5\\
+2022 & 177410 & 49029 & 19695 & 6304 & 3935 & 383 & 981 & 173 & 24 & 7\\*
+\end{longtable}
+
+\begin{longtable}[t]{lrrrrrrrrrr}
+\caption{\label{tab:FAA-tot-table}Total fishing mortality at age.}\\
+\toprule
+  & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10+\\
+\midrule
+\endfirsthead
+\caption[]{Total fishing mortality at age. \textit{(continued)}}\\
+\toprule
+  & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10+\\
+\midrule
+\endhead
+
+\endfoot
+\bottomrule
+\endlastfoot
+1968 & 0.018 & 0.177 & 0.177 & 0.177 & 0.177 & 0.177 & 0.177 & 0.177 & 0.177 & 0.177\\
+1969 & 0.013 & 0.129 & 0.129 & 0.129 & 0.129 & 0.129 & 0.129 & 0.129 & 0.129 & 0.129\\
+1970 & 0.022 & 0.217 & 0.217 & 0.217 & 0.217 & 0.217 & 0.217 & 0.217 & 0.217 & 0.217\\
+1971 & 0.033 & 0.330 & 0.330 & 0.330 & 0.330 & 0.330 & 0.330 & 0.330 & 0.330 & 0.330\\
+1972 & 0.039 & 0.382 & 0.382 & 0.382 & 0.382 & 0.382 & 0.382 & 0.382 & 0.382 & 0.382\\
+\addlinespace
+1973 & 0.061 & 0.599 & 0.599 & 0.599 & 0.599 & 0.599 & 0.599 & 0.599 & 0.599 & 0.599\\
+1974 & 0.073 & 0.718 & 0.718 & 0.718 & 0.718 & 0.718 & 0.718 & 0.718 & 0.718 & 0.718\\
+1975 & 0.075 & 0.740 & 0.740 & 0.740 & 0.740 & 0.740 & 0.740 & 0.740 & 0.740 & 0.740\\
+1976 & 0.084 & 0.833 & 0.833 & 0.833 & 0.833 & 0.833 & 0.833 & 0.833 & 0.833 & 0.833\\
+1977 & 0.036 & 0.360 & 0.360 & 0.360 & 0.360 & 0.360 & 0.360 & 0.360 & 0.360 & 0.360\\
+\addlinespace
+1978 & 0.014 & 0.142 & 0.142 & 0.142 & 0.142 & 0.142 & 0.142 & 0.142 & 0.142 & 0.142\\
+1979 & 0.020 & 0.198 & 0.198 & 0.198 & 0.198 & 0.198 & 0.198 & 0.198 & 0.198 & 0.198\\
+1980 & 0.017 & 0.169 & 0.169 & 0.169 & 0.169 & 0.169 & 0.169 & 0.169 & 0.169 & 0.169\\
+1981 & 0.025 & 0.251 & 0.251 & 0.251 & 0.251 & 0.251 & 0.251 & 0.251 & 0.251 & 0.251\\
+1982 & 0.026 & 0.254 & 0.254 & 0.254 & 0.254 & 0.254 & 0.254 & 0.254 & 0.254 & 0.254\\
+\addlinespace
+1983 & 0.023 & 0.230 & 0.230 & 0.230 & 0.230 & 0.230 & 0.230 & 0.230 & 0.230 & 0.230\\
+1984 & 0.010 & 0.101 & 0.101 & 0.101 & 0.101 & 0.101 & 0.101 & 0.101 & 0.101 & 0.101\\
+1985 & 0.020 & 0.195 & 0.195 & 0.195 & 0.195 & 0.195 & 0.195 & 0.195 & 0.195 & 0.195\\
+1986 & 0.022 & 0.219 & 0.219 & 0.219 & 0.219 & 0.219 & 0.219 & 0.219 & 0.219 & 0.219\\
+1987 & 0.035 & 0.344 & 0.344 & 0.344 & 0.344 & 0.344 & 0.344 & 0.344 & 0.344 & 0.344\\
+\addlinespace
+1988 & 0.051 & 0.499 & 0.499 & 0.499 & 0.499 & 0.499 & 0.499 & 0.499 & 0.499 & 0.499\\
+1989 & 0.044 & 0.438 & 0.438 & 0.438 & 0.438 & 0.438 & 0.438 & 0.438 & 0.438 & 0.438\\
+1990 & 0.052 & 0.517 & 0.517 & 0.517 & 0.517 & 0.517 & 0.517 & 0.517 & 0.517 & 0.517\\
+1991 & 0.050 & 0.491 & 0.491 & 0.491 & 0.491 & 0.491 & 0.491 & 0.491 & 0.491 & 0.491\\
+1992 & 0.036 & 0.354 & 0.354 & 0.354 & 0.354 & 0.354 & 0.354 & 0.354 & 0.354 & 0.354\\
+\addlinespace
+1993 & 0.038 & 0.375 & 0.375 & 0.375 & 0.375 & 0.375 & 0.375 & 0.375 & 0.375 & 0.375\\
+1994 & 0.059 & 0.580 & 0.580 & 0.580 & 0.580 & 0.580 & 0.580 & 0.580 & 0.580 & 0.580\\
+1995 & 0.049 & 0.482 & 0.482 & 0.482 & 0.482 & 0.482 & 0.482 & 0.482 & 0.482 & 0.482\\
+1996 & 0.122 & 1.204 & 1.204 & 1.204 & 1.204 & 1.204 & 1.204 & 1.204 & 1.204 & 1.204\\
+1997 & 0.070 & 0.692 & 0.692 & 0.692 & 0.692 & 0.692 & 0.692 & 0.692 & 0.692 & 0.692\\
+\addlinespace
+1998 & 0.086 & 0.848 & 0.848 & 0.848 & 0.848 & 0.848 & 0.848 & 0.848 & 0.848 & 0.848\\
+1999 & 0.160 & 1.578 & 1.578 & 1.578 & 1.578 & 1.578 & 1.578 & 1.578 & 1.578 & 1.578\\
+2000 & 0.078 & 0.771 & 0.771 & 0.771 & 0.771 & 0.771 & 0.771 & 0.771 & 0.771 & 0.771\\
+2001 & 0.021 & 0.209 & 0.209 & 0.209 & 0.209 & 0.209 & 0.209 & 0.209 & 0.209 & 0.209\\
+2002 & 0.038 & 0.373 & 0.373 & 0.373 & 0.373 & 0.373 & 0.373 & 0.373 & 0.373 & 0.373\\
+\addlinespace
+2003 & 0.062 & 0.616 & 0.616 & 0.616 & 0.616 & 0.616 & 0.616 & 0.616 & 0.616 & 0.616\\
+2004 & 0.097 & 0.956 & 0.956 & 0.956 & 0.956 & 0.956 & 0.956 & 0.956 & 0.956 & 0.956\\
+2005 & 0.082 & 0.812 & 0.812 & 0.812 & 0.812 & 0.812 & 0.812 & 0.812 & 0.812 & 0.812\\
+2006 & 0.138 & 1.364 & 1.364 & 1.364 & 1.364 & 1.364 & 1.364 & 1.364 & 1.364 & 1.364\\
+2007 & 0.103 & 1.012 & 1.012 & 1.012 & 1.012 & 1.012 & 1.012 & 1.012 & 1.012 & 1.012\\
+\addlinespace
+2008 & 0.128 & 1.265 & 1.265 & 1.265 & 1.265 & 1.265 & 1.265 & 1.265 & 1.265 & 1.265\\
+2009 & 0.165 & 1.629 & 1.629 & 1.629 & 1.629 & 1.629 & 1.629 & 1.629 & 1.629 & 1.629\\
+2010 & 0.244 & 2.408 & 2.408 & 2.408 & 2.408 & 2.408 & 2.408 & 2.408 & 2.408 & 2.408\\
+2011 & 0.194 & 1.912 & 1.912 & 1.912 & 1.912 & 1.912 & 1.912 & 1.912 & 1.912 & 1.912\\
+2012 & 0.133 & 1.307 & 1.307 & 1.307 & 1.307 & 1.307 & 1.307 & 1.307 & 1.307 & 1.307\\
+\addlinespace
+2013 & 0.136 & 1.338 & 1.338 & 1.338 & 1.338 & 1.338 & 1.338 & 1.338 & 1.338 & 1.338\\
+2014 & 0.135 & 1.328 & 1.328 & 1.328 & 1.328 & 1.328 & 1.328 & 1.328 & 1.328 & 1.328\\
+2015 & 0.124 & 1.223 & 1.223 & 1.223 & 1.223 & 1.223 & 1.223 & 1.223 & 1.223 & 1.223\\
+2016 & 0.085 & 0.837 & 0.837 & 0.837 & 0.837 & 0.837 & 0.837 & 0.837 & 0.837 & 0.837\\
+2017 & 0.067 & 0.659 & 0.659 & 0.659 & 0.659 & 0.659 & 0.659 & 0.659 & 0.659 & 0.659\\
+\addlinespace
+2018 & 0.104 & 1.024 & 1.024 & 1.024 & 1.024 & 1.024 & 1.024 & 1.024 & 1.024 & 1.024\\
+2019 & 0.073 & 0.717 & 0.717 & 0.717 & 0.717 & 0.717 & 0.717 & 0.717 & 0.717 & 0.717\\
+2020 & 0.103 & 1.017 & 1.017 & 1.017 & 1.017 & 1.017 & 1.017 & 1.017 & 1.017 & 1.017\\
+2021 & 0.087 & 0.863 & 0.863 & 0.863 & 0.863 & 0.863 & 0.863 & 0.863 & 0.863 & 0.863\\
+2022 & 0.018 & 0.178 & 0.178 & 0.178 & 0.178 & 0.178 & 0.178 & 0.178 & 0.178 & 0.178\\*
+\end{longtable}
+
+\end{document}
