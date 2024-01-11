@@ -992,45 +992,243 @@ setwd("~/Mackerel/runs/run33")
 plot_wham_output(m33)
 saveRDS(m33, file=paste0("m",33,".rds"))
 
+
+#### m34 logistic-normal random walk rec + iid NAA + age sel ar1 ####
+sel_re=list(model=c("age-specific",
+                    "age-specific",
+                    "age-specific",
+                    "age-specific"), 
+            re = c("ar1","none","none","none"), 
+            initial_pars=list(
+              c(0.5, 0.5, 0.5, 1, 1, 1, 1, 1, 1, 1),
+              #c(2,0.3),
+              c(1,1,1,1,1,1,1,1,1,1),
+              c(0, 0, 1, 0.6, 0.4, 0.2, 0, 0, 0, 0),
+              c(0, 0, 1, 0.6, 0.4, 0.2, 0, 0, 0, 0)),
+            fix_pars = list(
+              c(6),
+              c(1:10),
+              c(1:3,7:10),
+              c(1:3,7:10))
+) 
+
+input_34 <- prepare_wham_input(y, 
+                               selectivity=sel_re,
+                               recruit_model=1,
+                               age_comp = "logistic-normal-miss0",
+                               NAA_re = list(N1_model =1,sigma="rec+1", cor ="iid"),
+                               #catchability = q,
+                               #model_name="Run18_ASAP_like"
+)
+
+temp <- matrix(as.integer(input_34$map$logit_selpars),4)
+temp[1,c(1:5,7:10)] <- 1
+temp[1,c(6)] <- NA
+input_34$map$logit_selpars <- factor(temp)
+
+# run model
+m34 <- fit_wham(input_34, do.osa = F, do.retro = T)#, do.fit = F)
+check_convergence(m34)
+mohns_rho(m34)
+
+setwd("~/Mackerel/runs/run34")
+plot_wham_output(m34)
+saveRDS(m34, file=paste0("m",34,".rds"))
+
+
+#### m35 logistic-normal random walk rec + iid NAA + age sel ar1y ####
+sel_re=list(model=c("age-specific",
+                    "age-specific",
+                    "age-specific",
+                    "age-specific"), 
+            re = c("ar1_y","none","none","none"), 
+            initial_pars=list(
+              c(0.5, 0.5, 0.5, 1, 1, 1, 1, 1, 1, 1),
+              #c(2,0.3),
+              c(1,1,1,1,1,1,1,1,1,1),
+              c(0, 0, 1, 0.6, 0.4, 0.2, 0, 0, 0, 0),
+              c(0, 0, 1, 0.6, 0.4, 0.2, 0, 0, 0, 0)),
+            fix_pars = list(
+              c(7:10),
+              c(1:10),
+              c(1:3,7:10),
+              c(1:3,7:10))
+) 
+
+input_35 <- prepare_wham_input(y, 
+                               selectivity=sel_re,
+                               recruit_model=1,
+                               age_comp = "logistic-normal-miss0",
+                               NAA_re = list(N1_model =1,sigma="rec+1", cor ="iid"),
+                               #catchability = q,
+                               #model_name="Run18_ASAP_like"
+)
+
+
+# run model
+m35 <- fit_wham(input_35, do.osa = F, do.retro = T)#, do.fit = F)
+check_convergence(m35)
+mohns_rho(m35)
+
+setwd("~/Mackerel/runs/run35")
+plot_wham_output(m35)
+saveRDS(m35, file=paste0("m",35,".rds"))
+
+
+
+#### m36 logistic-normal random walk rec + iid NAA + age sel ar1 + iid q####
+sel_re=list(model=c("age-specific",
+                    "age-specific",
+                    "age-specific",
+                    "age-specific"), 
+            re = c("ar1","none","none","none"), 
+            initial_pars=list(
+              c(0.5, 0.5, 0.5, 1, 1, 1, 1, 1, 1, 1),
+              #c(2,0.3),
+              c(1,1,1,1,1,1,1,1,1,1),
+              c(0, 0, 1, 0.6, 0.4, 0.2, 0, 0, 0, 0),
+              c(0, 0, 1, 0.6, 0.4, 0.2, 0, 0, 0, 0)),
+            fix_pars = list(
+              c(6),
+              c(1:10),
+              c(1:3,7:10),
+              c(1:3,7:10))
+) 
+
+q = list(re = c("none", "iid","iid")) 
+
+input_36 <- prepare_wham_input(y, 
+                               selectivity=sel_re,
+                               recruit_model=1,
+                               age_comp = "logistic-normal-miss0",
+                               NAA_re = list(N1_model =1,sigma="rec+1", cor ="iid"),
+                               catchability = q,
+                               #model_name="Run18_ASAP_like"
+)
+
+temp <- matrix(as.integer(input_36$map$logit_selpars),4)
+temp[1,c(1:5,7:10)] <- 1
+temp[1,c(6)] <- NA
+input_36$map$logit_selpars <- factor(temp)
+
+# run model
+m36 <- fit_wham(input_36, do.osa = F, do.retro = T)#, do.fit = F)
+check_convergence(m36)
+mohns_rho(m36)
+
+setwd("~/Mackerel/runs/run36")
+plot_wham_output(m36)
+saveRDS(m36, file=paste0("m",36,".rds"))
+
+
+
+
 #### test ####
 
+sel_re=list(model=c("age-specific",
+                    "age-specific",
+                    "age-specific",
+                    "age-specific"), 
+            re = c("none","none","none","none"), 
+            initial_pars=list(
+              c(0.5, 0.5, 0.5, 1, 1, 1, 1, 1, 1, 1),
+              #c(2,0.3),
+              c(1,1,1,1,1,1,1,1,1,1),
+              c(0, 0, 1, 0.6, 0.4, 0.2, 0, 0, 0, 0),
+              c(0, 0, 1, 0.6, 0.4, 0.2, 0, 0, 0, 0)),
+            fix_pars = list(
+              c(4:10),
+              c(1:10),
+              c(1:3,7:10),
+              c(1:3,7:10))
+) 
+
+input_34 <- prepare_wham_input(y, 
+                               selectivity=sel_re,
+                               recruit_model=2,
+                               age_comp = "dir-mult",
+                               NAA_re = list(sigma="rec+1", cor ="iid"),
+                               #catchability = q,
+                               #model_name="Run18_ASAP_like"
+)
+
+temp <- matrix(as.integer(input_34$map$logit_selpars),4)
+temp[1,c(1:5,7:10)] <- 1
+temp[1,c(6)] <- NA
+input_34$map$logit_selpars <- factor(temp)
+
+# run model
+mT <- fit_wham(input_34, do.osa = F, do.retro = F)#, do.fit = F)
+check_convergence(mT)
+mohns_rho(mT)
+
+setwd("~/Mackerel/runs/T")
+plot_wham_output(mT)
+saveRDS(mT, file=paste0("m",1,".rds"))
+
+
+#### NAA 2dar1 does not converge####
 sel=list(model=c("age-specific",
                  "age-specific",
                  "age-specific",
                  "age-specific"), 
-          re = c("2dar1","none","none","none"), 
-         initial_pars=list(
-           c(0.5, 0.5, 0.5, 1, 1, 1, 1, 1, 1, 1),
-           #c(2,0.3),
+         re = c("ar1","none","none","none"), 
+         initial_pars=list(c(0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5),
                            c(1,1,1,1,1,1,1,1,1,1),
                            c(0, 0, 1, 0.6, 0.4, 0.2, 0, 0, 0, 0),
                            c(0, 0, 1, 0.6, 0.4, 0.2, 0, 0, 0, 0)),
          fix_pars = list(
-           c(8:10),
+           c(6),
            c(1:10),
            c(1:3,7:10),
            c(1:3,7:10))
 ) 
 
-input_14 <- prepare_wham_input(y, 
+
+input_37 <- prepare_wham_input(y, 
                                selectivity=sel,
                                recruit_model=1,
-                               age_comp = "dir-mult",
-                               NAA_re = list(sigma="rec+1", cor ="iid"),
-                               M = list(model = "constant", re = "ar1_a"),
+                               age_comp = "logistic-normal-miss0",
+                               NAA_re = list(sigma="rec+1", cor ="2dar1"),
+                               #catchability = q,
                                #model_name="Run18_ASAP_like"
 )
 
+temp <- matrix(as.integer(input_37$map$logit_selpars),4)
+temp[1,c(1:5,7:10)] <-1 
+temp[1,c(6)] <- NA
+input_37$map$logit_selpars <- factor(temp)
+
 # run model
-m14 <- fit_wham(input_14, do.osa = F, do.retro = T)#, do.fit = F)
-check_convergence(m14)
+m37 <- fit_wham(input_37, do.osa = F, do.retro = T)#, do.fit = F)
+check_convergence(m37)
 
-setwd("~/Mackerel/runs/run25")
-mohns_rho(m14)
-plot_wham_output(m14)
-saveRDS(m14, file=paste0("m",14,".rds"))
+# does not converge
 
-input_26 <- prepare_wham_input(y, 
+setwd("~/Mackerel/runs/run37")
+plot_wham_output(m37)
+saveRDS(m37, file=paste0("m",37,".rds"))
+
+#### run 37 ####
+
+sel=list(model=c("age-specific",
+                 "age-specific",
+                 "age-specific",
+                 "age-specific"), 
+         re = c("ar1","none","none","none"), 
+         initial_pars=list(c(0.5,0.5,0.5,0.5,0.5,1,0.5,0.5,0.5,0.5),
+                           c(1,1,1,1,1,1,1,1,1,1),
+                           c(0, 0, 1, 0.6, 0.4, 0.2, 0, 0, 0, 0),
+                           c(0, 0, 1, 0.6, 0.4, 0.2, 0, 0, 0, 0)),
+         fix_pars = list(
+           c(6),
+           c(1:10),
+           c(1:3,7:10),
+           c(1:3,7:10))
+) 
+
+
+input_37 <- prepare_wham_input(y, 
                                selectivity=sel,
                                recruit_model=1,
                                age_comp = "logistic-normal-miss0",
@@ -1039,13 +1237,193 @@ input_26 <- prepare_wham_input(y,
                                #model_name="Run18_ASAP_like"
 )
 
+temp <- matrix(as.integer(input_37$map$logit_selpars),4)
+temp[1,c(1:5, 7:10)] <-1 
+temp[1,c(6)] <- NA
+input_37$map$logit_selpars <- factor(temp)
+
 # run model
-m26 <- fit_wham(input_26, do.osa = F, do.retro = T)#, do.fit = F)
-check_convergence(m26)
-mohns_rho(m26)
+m37 <- fit_wham(input_37, do.osa = F, do.retro = F)#, do.fit = F)
+check_convergence(m37)
 
-# age-comp residuals go to zero! 
+setwd("~/Mackerel/runs/run37")
+plot_wham_output(m37)
+saveRDS(m37, file=paste0("m",37,".rds"))
 
-setwd("~/Mackerel/runs/run26")
-plot_wham_output(m26)
-saveRDS(m26, file=paste0("m",26,".rds"))
+#### run 38: NAA ar1_a   converge####
+sel=list(model=c("age-specific",
+                 "age-specific",
+                 "age-specific",
+                 "age-specific"), 
+         re = c("ar1","none","none","none"), 
+         initial_pars=list(c(0.5,0.5,0.5,0.5,0.5,1,0.5,0.5,0.5,0.5),
+                           c(1,1,1,1,1,1,1,1,1,1),
+                           c(0, 0, 1, 0.6, 0.4, 0.2, 0, 0, 0, 0),
+                           c(0, 0, 1, 0.6, 0.4, 0.2, 0, 0, 0, 0)),
+         fix_pars = list(
+           c(6),
+           c(1:10),
+           c(1:3,7:10),
+           c(1:3,7:10))
+) 
+
+
+input_38 <- prepare_wham_input(y, 
+                               selectivity=sel,
+                               recruit_model=1,
+                               age_comp = "logistic-normal-miss0",
+                               NAA_re = list(N1_model =1,sigma="rec+1", cor ="ar1_a"),
+                               #catchability = q,
+                               #model_name="Run18_ASAP_like"
+)
+
+temp <- matrix(as.integer(input_38$map$logit_selpars),4)
+temp[1,c(1:5,7:10)] <-1 
+temp[1,c(6)] <- NA
+input_38$map$logit_selpars <- factor(temp)
+
+# run model
+m38 <- fit_wham(input_38, do.osa = F, do.retro = T)#, do.fit = F)
+check_convergence(m38)
+
+# does not converge
+
+setwd("~/Mackerel/runs/run38")
+plot_wham_output(m38)
+saveRDS(m38, file=paste0("m",38,".rds"))
+
+
+#### run 39 ar1_y ####
+
+sel=list(model=c("age-specific",
+                 "age-specific",
+                 "age-specific",
+                 "age-specific"), 
+         re = c("ar1","none","none","none"), 
+         initial_pars=list(c(0.5,0.5,0.5,0.5,0.5,0.5,1,1,1,1),
+                           c(1,1,1,1,1,1,1,1,1,1),
+                           c(0, 0, 1, 0.6, 0.4, 0.2, 0, 0, 0, 0),
+                           c(0, 0, 1, 0.6, 0.4, 0.2, 0, 0, 0, 0)),
+         fix_pars = list(
+           c(7:10),
+           c(1:10),
+           c(1:3,7:10),
+           c(1:3,7:10))
+) 
+
+
+input_39 <- prepare_wham_input(y, 
+                               selectivity=sel,
+                               recruit_model=1,
+                               age_comp = "logistic-normal-miss0",
+                               NAA_re = list(N1_model =1,sigma="rec+1", cor ="ar1_y"),
+                               #catchability = q,
+                               #model_name="Run18_ASAP_like"
+)
+
+temp <- matrix(as.integer(input_39$map$logit_selpars),4)
+temp[1,c(1:5)] <-1 
+temp[1,c(6)] <- NA
+input_39$map$logit_selpars <- factor(temp)
+
+# run model
+m39 <- fit_wham(input_39, do.osa = F, do.retro = F)#, do.fit = F)
+check_convergence(m39)
+
+setwd("~/Mackerel/runs/run39")
+plot_wham_output(m39)
+saveRDS(m39, file=paste0("m",39,".rds"))
+
+
+#### run 40 2dar1 ####
+
+sel=list(model=c("age-specific",
+                 "age-specific",
+                 "age-specific",
+                 "age-specific"), 
+         re = c("none","none","none","none"), 
+         initial_pars=list(c(0.5,0.5,0.5,0.5,1,1,1,1,1,1),
+                           c(1,1,1,1,1,1,1,1,1,1),
+                           c(0, 0, 1, 0.6, 0.4, 0.2, 0, 0, 0, 0),
+                           c(0, 0, 1, 0.6, 0.4, 0.2, 0, 0, 0, 0)),
+         fix_pars = list(
+           c(7:10),
+           c(1:10),
+           c(1:3,7:10),
+           c(1:3,7:10))
+) 
+
+
+input_40 <- prepare_wham_input(y, 
+                               selectivity=sel,
+                               recruit_model=1,
+                               age_comp = "logistic-normal-miss0",
+                               #NAA_re = list(sigma="rec+1", cor ="2dar1"),
+                               #catchability = q,
+                               #model_name="Run18_ASAP_like"
+)
+
+temp <- matrix(as.integer(input_40$map$logit_selpars),4)
+temp[1,c(1:5)] <-1 
+temp[1,c(6)] <- NA
+input_40$map$logit_selpars <- factor(temp)
+
+# run model
+m40 <- fit_wham(input_40, do.osa = F, do.retro = F)#, do.fit = F)
+check_convergence(m40)
+
+setwd("~/Mackerel/runs/run40")
+plot_wham_output(m40)
+saveRDS(m40, file=paste0("m",40,".rds"))
+
+#### plots ####
+
+# age comps
+setwd("~/Mackerel/age_comps/m1")
+r1 <- readRDS("~/Mackerel/age_comps/m1.rds")
+r2 <- readRDS("~/Mackerel/age_comps/m5.rds")
+
+mods<-list(r1,r2)
+
+compare_wham_models(mods)
+
+# rec
+setwd("~/Mackerel/runs")
+#r5<- readRDS("~/Mackerel/runs/m5.rds")
+
+r1 <- readRDS("~/GitHub/Mack.WHAM.2021MT/Runs/run3/m3.rds")
+r2 <- readRDS("~/GitHub/Mack.WHAM.2021MT/Runs/run4/m4.rds")
+r3 <- readRDS("~/GitHub/Mack.WHAM.2021MT/Runs/run5/m5.rds")
+r4 <- readRDS("~/GitHub/Mack.WHAM.2021MT/Runs/run6/m6.rds")
+
+mods<-list(r1,r2,r3,r4)
+
+compare_wham_models(mods)
+
+####### tv sel
+r0 <- readRDS("~/GitHub/Mack.WHAM.2021MT/Runs/run3/m3.rds")
+r1 <- readRDS("~/GitHub/Mack.WHAM.2021MT/Runs/run8/m8.rds")
+r2 <- readRDS("~/GitHub/Mack.WHAM.2021MT/Runs/run9/m9.rds")
+r3 <- readRDS("~/GitHub/Mack.WHAM.2021MT/Runs/run10/m10.rds")
+r4 <- readRDS("~/GitHub/Mack.WHAM.2021MT/Runs/run11/m11.rds")
+r5 <- readRDS("~/Mackerel/runs/T/m1.rds")
+
+mods<-list(r0,r1,r2,r3,r4,r5)
+
+compare_wham_models(mods)
+
+### NAA
+r1 <- readRDS("~/Mackerel/runs/run37/m37.rds")
+r2 <- readRDS("~/Mackerel/runs/run38/m38.rds")
+r3 <- readRDS("~/Mackerel/runs/run39/m39.rds")
+r4 <- readRDS("~/Mackerel/runs/run40/m40.rds")
+
+check_convergence(r3)
+
+
+mods<-list(m1=r1,m2=r2, m3=r3,m4=r4, m5=r5)
+
+compare_wham_models(mods)
+
+
+
