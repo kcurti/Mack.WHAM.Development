@@ -116,3 +116,29 @@ df.mods
 write.csv(df.mods,"df.mods.csv")
 
 ################################
+y <- read_asap3_dat("C:/Users/alex.hansell/Downloads/RUN9.dat")
+
+#Increase ESS
+y$dat$IAA_mats[[2]][c(42:52,54:55),14] <- 1000
+y$dat$IAA_mats[[3]][7:41,14] <- 1000
+y$dat$IAA_mats[[3]][42:55,2:13]<--999
+y$dat$catch_Neff[,1] <- 1000
+
+
+input_ASAP <- prepare_wham_input(y, 
+                                 selectivity=sel,
+                                 #recruit_model=3,
+                                 age_comp = list(fleets = rep("mvtweedie",1), 
+                                                 indices = rep("mvtweedie", 3))
+                                 #NAA_re = list(sigma="rec", cor ="iid"),
+                                 #catchability = q,
+                                 #model_name="Run18_ASAP_like"
+)
+
+
+
+# fit model
+mod <- fit_wham(input_ASAP, do.osa=T, do.retro=T) 
+mohns_rho(mod)
+
+plot_wham_output(mod)
