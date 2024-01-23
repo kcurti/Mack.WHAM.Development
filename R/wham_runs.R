@@ -24,8 +24,11 @@ y$dat$IAA_mats[[3]][7:41,14] <- 1000
 y$dat$IAA_mats[[3]][42:55,2:13]<--999
 y$dat$catch_Neff[,1] <- 1000
 
+y$map$trans_NAA_rho
 #### m1:asap like run ####
 input_1 <- prepare_wham_input(y)
+
+input_1$map$trans_NAA_rho
 
 m1 <- fit_wham(input_1, do.osa = F, do.retro = T)#, do.fit = F)
 check_convergence(m1)
@@ -44,12 +47,12 @@ sel=list(model=c("logistic",
          initial_pars=list(c(2,0.3),
                            c(1,1,1,1,1,1,1,1,1,1),
                            c(0, 0, 1, 0.6, 0.4, 0.2, 0, 0, 0, 0),
-                           c(0, 0, 1, 0.6, 0.4, 0.2, 0, 0, 0, 0)),
+                           c(1, 1, 1, 0.6, 0.4, 0.2, 0.2, 0.2, 0.2, 0.2)),
          fix_pars = list(
            c(NULL),
            c(1:10),
            c(1:3,7:10),
-           c(1:3,7:10))
+           c(1:3))
 ) 
 
 sel2=list(model=c("age-specific",
@@ -81,7 +84,7 @@ check_convergence(m1)
 input_2 <- prepare_wham_input(y, 
                                 selectivity=sel2,
                                 #recruit_model=3,
-                                age_comp = "logistic-normal-miss0",
+                                age_comp = "logistic-normal-pool0",
                                 #NAA_re = list(sigma="rec", cor ="iid"),
                                 #catchability = q,
                                 #model_name="Run18_ASAP_like"
@@ -92,7 +95,7 @@ input_2 <- prepare_wham_input(y,
 m2 <- fit_wham(input_2, do.osa = F, do.retro = T)#, do.fit = F)
 check_convergence(m2)
 
-C:\Users\alex.hansell\Documents\GitHub\Mack.WHAM.2021MT\Runs\run3\plots_png\diagnostics
+#C:\Users\alex.hansell\Documents\GitHub\Mack.WHAM.2021MT\Runs\run3\plots_png\diagnostics
 setwd("~/GitHub/Mack.WHAM.2021MT/Runs/run2")
 plot_wham_output(m2)
 saveRDS(m2, file=paste0("m",2,".rds"))
@@ -120,7 +123,7 @@ saveRDS(m3, file=paste0("m",3,".rds"))
 input_4 <- prepare_wham_input(y, 
                               selectivity=sel2,
                               recruit_model=2,
-                              age_comp = "logistic-normal-miss0",
+                              age_comp = "logistic-normal-pool0",
                               NAA_re = list(sigma="rec", cor ="ar1_y"),
                               #catchability = q,
                               #model_name="Run18_ASAP_like"
@@ -138,7 +141,7 @@ saveRDS(m4, file=paste0("m",4,".rds"))
 input_5 <- prepare_wham_input(y, 
                               selectivity=sel2,
                               recruit_model=2,
-                              age_comp = "logistic-normal-miss0",
+                              age_comp = "logistic-normal-pool0",
                               NAA_re = list(sigma="rec", cor ="iid"),
                               #catchability = q,
                               #model_name="Run18_ASAP_like"
@@ -177,12 +180,12 @@ plot_wham_output(m6)
 saveRDS(m6, file=paste0("m",6,".rds"))
 
 r0 <- readRDS("~/GitHub/Mack.WHAM.2021MT/Runs/run2/m2.rds")
-r1 <- readRDS("~/GitHub/Mack.WHAM.2021MT/Runs/run3/m3.rds")
+#r1 <- readRDS("~/GitHub/Mack.WHAM.2021MT/Runs/run3/m3.rds")
 r2 <- readRDS("~/GitHub/Mack.WHAM.2021MT/Runs/run4/m4.rds")
 r3 <- readRDS("~/GitHub/Mack.WHAM.2021MT/Runs/run5/m5.rds")
-r4 <- readRDS("~/GitHub/Mack.WHAM.2021MT/Runs/run6/m6.rds")
+#r4 <- readRDS("~/GitHub/Mack.WHAM.2021MT/Runs/run6/m6.rds")
 
-mods<-list(r1,r2,r3,r4)
+mods<-list(r0,r2,r3)
 compare_wham_models(mods)
 
 #### m7: Ricker rec ####
@@ -224,9 +227,9 @@ sel_re=list(model=c("age-specific",
 
 input_8 <- prepare_wham_input(y, 
                               selectivity=sel_re,
-                              recruit_model=1,
-                              age_comp = "logistic-normal-miss0",
-                              #NAA_re = list(sigma="rec", cor ="iid"),
+                              recruit_model=2,
+                              age_comp = "logistic-normal-pool0",
+                              #NAA_re = list(sigma="rec+1", cor ="ar1_y"),
                               #catchability = q,
                               #model_name="Run18_ASAP_like"
 )
@@ -260,8 +263,8 @@ sel_re2=list(model=c("age-specific",
 
 input_9 <- prepare_wham_input(y, 
                               selectivity=sel_re2,
-                              recruit_model=1,
-                              age_comp = "logistic-normal-miss0",
+                              recruit_model=2,
+                              age_comp = "logistic-normal-pool0",
                               #NAA_re = list(sigma="rec", cor ="iid"),
                               #catchability = q,
                               #model_name="Run18_ASAP_like"
@@ -295,7 +298,7 @@ sel_re3=list(model=c("age-specific",
 
 input_10 <- prepare_wham_input(y, 
                               selectivity=sel_re3,
-                              recruit_model=1,
+                              recruit_model=2,
                               age_comp = "logistic-normal-miss0",
                               #NAA_re = list(sigma="rec", cor ="iid"),
                               #catchability = q,
@@ -344,20 +347,20 @@ setwd("~/GitHub/Mack.WHAM.2021MT/Runs/run11")
 plot_wham_output(m11)
 saveRDS(m11, file=paste0("m",11,".rds"))
 
-r0 <- readRDS("~/GitHub/Mack.WHAM.2021MT/Runs/run3/m3.rds")
+r0 <- readRDS("~/GitHub/Mack.WHAM.2021MT/Runs/run2/m2.rds")
 r1 <- readRDS("~/GitHub/Mack.WHAM.2021MT/Runs/run8/m8.rds")
 r2 <- readRDS("~/GitHub/Mack.WHAM.2021MT/Runs/run9/m9.rds")
 r3 <- readRDS("~/GitHub/Mack.WHAM.2021MT/Runs/run10/m10.rds")
-r4 <- readRDS("~/GitHub/Mack.WHAM.2021MT/Runs/run11/m11.rds")
+#r4 <- readRDS("~/GitHub/Mack.WHAM.2021MT/Runs/run11/m11.rds")
 
-mods<-list(r0,r1,r2,r3,r4)
+mods<-list(r0,r1,r2,r3)
 compare_wham_models(mods)
 
 #### m12: NAA iid ####
 input_12 <- prepare_wham_input(y, 
                                selectivity=sel2,
-                               recruit_model= 1,
-                               age_comp = "logistic-normal-miss0",
+                               recruit_model= 2,
+                               age_comp = "logistic-normal-pool0",
                                NAA_re = list(N1_model =1,sigma="rec+1", cor ="iid"),
                                #catchability = q,
                                #model_name="Run18_ASAP_like"
@@ -372,17 +375,21 @@ plot_wham_output(m12)
 saveRDS(m12, file=paste0("m",12,".rds"))
 
 #### m13: NAA 2dar1 ####
+basic_info <- list(simulate_process_error = rep(FALSE, 5))
+
 input_13 <- prepare_wham_input(y, 
                                selectivity=sel2,
-                               recruit_model=1,
-                               age_comp = "logistic-normal-miss0",
+                               recruit_model=2,
+                               age_comp = "logistic-normal-pool0",
                                NAA_re = list(N1_model =1,sigma="rec+1", cor ="2dar1"),
+                               #basic_info = basic_info
                                #catchability = q,
                                #model_name="Run18_ASAP_like"
 )
 
+
 # run model
-m13 <- fit_wham(input_13, do.osa = T, do.retro = T)#, do.fit = F)
+m13 <- fit_wham(input_13, do.osa = F, do.retro = T)#, do.fit = F)
 check_convergence(m13)
 
 setwd("~/GitHub/Mack.WHAM.2021MT/Runs/run13")
@@ -395,7 +402,7 @@ saveRDS(m13, file=paste0("m",13,".rds"))
 #### m14:dirichlet-pool0 ####
 input_14 <- prepare_wham_input(y, 
                                selectivity=sel2,
-                               recruit_model=1,
+                               recruit_model=2,
                                age_comp = "logistic-normal-miss0",
                                NAA_re = list(N1_model =1,sigma="rec+1", cor ="ar1_a"),
                                #catchability = q,
@@ -412,15 +419,19 @@ saveRDS(m14, file=paste0("m",14,".rds"))
 
 
 #### m15: NAA ar1_ ####
+
+input_1$map$trans_NAA_rho
+
 input_15 <- prepare_wham_input(y, 
                                selectivity=sel2,
                                recruit_model=1,
-                               age_comp = "logistic-normal-miss0",
+                               age_comp = "logistic-normal-pool0",
                                NAA_re = list(N1_model =1,sigma="rec+1", cor ="ar1_y"),
                                #catchability = q,
                                #model_name="Run18_ASAP_like"
 )
 
+input_15$map$trans_NAA_rho
 # run model
 m15 <- fit_wham(input_15, do.osa = F, do.retro = T)#, do.fit = F)
 check_convergence(m15)
@@ -1155,6 +1166,47 @@ saveRDS(m36, file=paste0("m",36,".rds"))
 
 #### test ####
 
+input_15 <- prepare_wham_input(y, 
+                               selectivity=sel2,
+                               recruit_model=2,
+                              # age_comp = "logistic-normal-miss0",
+                               NAA_re = list(sigma="rec+1", cor ="iid"),
+                               #catchability = q,
+                               #model_name="Run18_ASAP_like"
+)
+
+input_15$data$n_NAA_sigma
+
+# run model
+mT <- fit_wham(input_15, do.osa = F, do.retro = T)#, do.fit = F)
+check_convergence(mT)
+mohns_rho(mT)
+
+
+input_16 <- prepare_wham_input(y, 
+                               selectivity=sel2,
+                               recruit_model=2,
+                               age_comp = "logistic-normal-miss0",
+                               NAA_re = list(N1_model =1,sigma="rec+1", cor ="2dar1"),
+                               #catchability = q,
+                               #model_name="Run18_ASAP_like"
+)
+
+input_16$data$n_NAA_sigma
+
+# run model
+mT2 <- fit_wham(input_16, do.osa = F, do.retro = T)#, do.fit = F)
+check_convergence(mT2)
+mohns_rho(mT2)
+
+setwd("~/GitHub/Mack.WHAM.2021MT/Runs/test")
+#plot_wham_output(m15)
+saveRDS(mT2, file=paste0("mrec_2.rds"))
+
+
+
+
+
 sel_re=list(model=c("age-specific",
                     "age-specific",
                     "age-specific",
@@ -1463,8 +1515,8 @@ compare_wham_models(mods)
 
 #### m41: NAA iid + ar1_y sel ####
 input_41 <- prepare_wham_input(y, 
-                               selectivity=sel_re2,
-                               recruit_model= 1,
+                               selectivity=sel2,
+                               recruit_model= 2,
                                age_comp = "logistic-normal-miss0",
                                NAA_re = list(N1_model =1,sigma="rec+1", cor ="iid"),
                                #catchability = q,
@@ -1481,8 +1533,8 @@ saveRDS(m41, file=paste0("m",41,".rds"))
 
 #### m42: NAA 2dar1 + ar1_y sel ####
 input_42 <- prepare_wham_input(y, 
-                               selectivity=sel_re2,
-                               recruit_model=1,
+                               selectivity=sel2,
+                               recruit_model=2,
                                age_comp = "logistic-normal-miss0",
                                NAA_re = list(N1_model =1,sigma="rec+1", cor ="2dar1"),
                                #basic_info = basic_info
@@ -1490,7 +1542,7 @@ input_42 <- prepare_wham_input(y,
                                #model_name="Run18_ASAP_like"
 )
 
-basic_info <- list(simulate_process_error = rep(FALSE, 5))
+#basic_info <- list(simulate_process_error = rep(FALSE, 5))
 
 input <- prepare_wham_input(asap3, model_name="insert model name", basic_info = basic_info)
 
@@ -1505,8 +1557,8 @@ saveRDS(m42, file=paste0("m",42,".rds"))
 
 #### m43: NAA ar1_a + ar1_y sel ####
 input_43 <- prepare_wham_input(y, 
-                               selectivity=sel_re2,
-                               recruit_model=1,
+                               selectivity=sel2,
+                               recruit_model=2,
                                age_comp = "logistic-normal-miss0",
                                NAA_re = list(N1_model =1,sigma="rec+1", cor ="ar1_a"),
                                #catchability = q,
@@ -1524,8 +1576,8 @@ saveRDS(m43, file=paste0("m",43,".rds"))
 
 #### m44: NAA ar1_y + ar1_y sel ####
 input_44 <- prepare_wham_input(y, 
-                               selectivity=sel_re2,
-                               recruit_model=1,
+                               selectivity=sel2,
+                               recruit_model=2,
                                age_comp = "logistic-normal-miss0",
                                NAA_re = list(N1_model =1,sigma="rec+1", cor ="ar1_y"),
                                #catchability = q,
@@ -1550,4 +1602,37 @@ mods<-list(r1,r2,r3,r4)
 compare_wham_models(mods)
 
 
+
+
+
+#### projections ####
+m13 <- readRDS("~/GitHub/Mack.WHAM.2021MT/Runs/run13/m13.rds")
+
+# extract R sigma estimates for Liz
+m13$sdrep$par.fixed[(names(m13$sdrep$par.fixed)=="log_NAA_sigma")]
+m13$sdrep$par.fixed[(names(m13$sdrep$par.fixed)=="trans_NAA_rho")]
+
+
+proj1 <- project_wham(m13, proj.opts  = list(n.yrs = 4,
+                                             #use.FXSPR = TRUE,
+                                             #percentFXSPR = 21,
+                                             avg.yrs = 2017:2021,
+                                             proj.catch = c(rep(5953, 4)),
+                                             proj_F_opt = c(5, rep(3,3))
+))
+
+apply(proj1$rep$FAA_tot, 1, max)
+proj1$rep$catch_proj %>% round()
+proj1$rep$SSB %>% round()
+
+std <- summary(m13$sdrep, "report")
+inds <- list(Y.t = which(rownames(std) == "log_Y_FXSPR"))
+inds$F.t <- which(rownames(std) == "log_FXSPR")
+inds$SSB.t <- which(rownames(std) == "log_SSB_FXSPR")
+inds$ssb <- which(rownames(std) == "log_SSB")
+inds$faa <- which(rownames(std) == "log_FAA_tot")
+log.faa <- matrix(std[inds$faa,1], n_years_full, n_ages)
+vals <- std[t.ind,1][1:n_years_full]
+#age.full.f <- apply(log.faa,1, function(x) max(which(x == max(x))))
+inds$full.f <- (age.full.f-1)*n_years_full + 1:n_years_full  + min(inds$faa) - 1 #cbind(1:n_years, age.full.f)
 
