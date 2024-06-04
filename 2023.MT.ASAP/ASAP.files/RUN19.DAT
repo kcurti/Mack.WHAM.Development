@@ -1,5 +1,5 @@
 # ASAP VERSION 3.0
-# Run 19: Run 9 but with original (empirical CVs) for all indices
+# Run 19: Run 9 but with 1) original (empirical CVs) for all indices, 2) age-1 and age-2 BTS selectivity set to zero, and 3) age-7 and age-8 big selectivity estimated
 #
 # ASAP GUI 15 AUG 2012
 #
@@ -606,14 +606,14 @@
 0               0               0               0               
 0               0               0               0               
 # Index-2 Selectivity Data 
-1               -4              0               1               
-1               -4              0               1               
+0               -4              0               1               
+0               -4              0               1               
 1               -4              0               1               
 0.6             4               0               1               
 0.4             4               0               1               
 0.3             4               0               1               
-0.3             -4              0               1               
-0               -4              0               1               
+0.3             4               0               1               
+0.3             4               0               1               
 0               -4              0               1               
 0               -4              0               1               
 0               0               0               0               
@@ -623,8 +623,8 @@
 0               0               0               0               
 0               0               0               0               
 # Index-3 Selectivity Data 
-1               -4              0               1               
-1               -4              0               1               
+0               -4              0               1               
+0               -4              0               1               
 1               -4              0               1               
 0.6             4               0               1               
 0.4             4               0               1               
