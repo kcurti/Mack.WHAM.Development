@@ -2,7 +2,7 @@
 # Requires sourcing calc_uncertainty_log_ests.R function
 # Inputs
 #    run.dir = path to directory with WHAM run ("Run19dat_Runs/run0")
-#    model.rds = name of model fit rds file.  (m0.RDS")
+#    model.rds = name of model fit rds file  ("m0.RDS")
 
 
 require(tidyverse)
