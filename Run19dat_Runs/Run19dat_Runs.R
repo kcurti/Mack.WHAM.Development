@@ -45,17 +45,17 @@ mt2023.modESS[[1]]$dat$catch_Neff[,] <- 1000
 
 
 # ##### M0: asap-like run with file from 2023 MT #####  !! ASK ALEX ABOUT THIS
-# 
-# m0.asap <- mt2023.orig
-# m0_input <- prepare_wham_input(m0.asap)
-# m0 <- fit_wham(m0_input, do.osa = F, do.retro = T)
-#   check_convergence(m0)
-# # Save output  
-# m0.dir <- file.path(rungroup.dir, "run0")
-#   if(!dir.exists(m0.dir)) {dir.create(m0.dir)}
-# 
-# plot_wham_output(m0, dir.main=file.path(getwd(),m0.dir))
-# saveRDS(m1, file=file.path(m1.dir, "m1.rds"))
+
+m0.asap <- mt2023.orig
+m0_input <- prepare_wham_input(m0.asap)
+m0 <- fit_wham(m0_input, do.osa = F, do.retro = T)
+  check_convergence(m0)
+# Save output
+m0.dir <- file.path(rungroup.dir, "run0")
+  if(!dir.exists(m0.dir)) {dir.create(m0.dir)}
+
+plot_wham_output(m0, dir.main=file.path(getwd(),m0.dir))
+saveRDS(m0, file=file.path(m0.dir, "m0.rds"))
 
 
 
