@@ -6,6 +6,13 @@
 # Can do plot_wham_output without sdreport to get parameter estimate table
 # # or look at ops$pars and look at the specific sigma parameters to see if they go to zero
 
+# A priori, could be random effects in 1) recruitment
+#                                      2) NAA
+#                                      3) Fishery selectivity
+#                                      4) Index catchability
+#                                      5) Index selectivity (though estimability questionable)
+# model_name="Run18_ASAP_like"
+
 
 # pak::pkg_install("timjmiller/wham@lab", lib = "C:/Users/Kiersten.Curti/AppData/Local/R/win-library/4.3/multi_wham")
 library("wham", lib.loc = "C:/Users/Kiersten.Curti/AppData/Local/R/win-library/4.3/multi_wham")
@@ -22,6 +29,8 @@ rungroup.dir <- "Run19dat_Runs"
 source(file.path("R","calc_uncertainty_log_ests.R"))
 # Function to extract time series estimates 
 source(file.path("R","extract_time_series_ests.R"))
+# Function to read in asap estimates
+source(file.path("R","import_asap_ests.R"))
 
 
 
@@ -70,9 +79,16 @@ m0.dir <- file.path(rungroup.dir, "run0")
 plot_wham_output(m0, dir.main=file.path(getwd(),m0.dir))
 saveRDS(m0, file=file.path(m0.dir, "m0.rds"))
 
-# Compare to ASAP output
+# Extract time series estimates for comparison to ASAP output
 m0.ests <- extract_time_series_ests(m0.dir, "m0.rds")
   
+# Import ASAP output
+asap.dir <- "2023.MT.ASAP/ASAP.files/"
+asap.ests.csv.fname <- "ASAP_summary_Run9.MCMC.csv"
+mt2023.ests <- import_asap_ests(asap.dir, asap.ests.csv.fname)
+  
+##### NEED TO ADD CODE TO CREATE PLOT WITH ASAP OUTPUT
+
 
 
 ##### M1: asap-like run but with original index CVs and slightly modified Bigelow selectivity #####
@@ -164,12 +180,6 @@ m2_age.comps[m2.compare$best]
 
 
 ##### M3: Given logistic-normal-ar1-miss0 age comp, looping over random effects  #####
-# A priori, could be random effects in 1) recruitment
-#                                      2) NAA
-#                                      3) Fishery selectivity
-#                                      4) Index catchability
-#                                      5) Index selectivity (though estimability questionable)
-# model_name="Run18_ASAP_like"
 
 
 
