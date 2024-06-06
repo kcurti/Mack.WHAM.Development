@@ -1,3 +1,8 @@
+##### Defaults
+
+# Recruitment model = 2 (mean + deviations when do not have random effects turned on)
+
+
 ##### General guidance #####
 # First move to different likelihood for age comps; Do not necessarily need the "right" age-comp model before going to random effects
   # Once have some idea of random effects, then review likelihood assumptions
@@ -31,7 +36,8 @@ source(file.path("R","calc_uncertainty_log_ests.R"))
 source(file.path("R","extract_time_series_ests.R"))
 # Function to read in asap estimates
 source(file.path("R","import_asap_ests.R"))
-
+# Function to create plots comparing a WHAM run to previous ASAP output
+source(file.path("R","compare_asap_wham_ests.R"))
 
 
 ### ASAP Dat files
@@ -87,7 +93,8 @@ asap.dir <- "2023.MT.ASAP/ASAP.files/"
 asap.ests.csv.fname <- "ASAP_summary_Run9.MCMC.csv"
 mt2023.ests <- import_asap_ests(asap.dir, asap.ests.csv.fname)
   
-##### NEED TO ADD CODE TO CREATE PLOT WITH ASAP OUTPUT
+# Compare WHAM run to ASAP output
+compare_asap_wham_ests(mt2023.ests, m0.ests, file.path(m0.dir, "Comparison.figures")) 
 
 
 
@@ -179,13 +186,22 @@ m2_age.comps[m2.compare$best]
 
 
 
-##### M3: Given logistic-normal-ar1-miss0 age comp, looping over random effects  #####
+##### M3: Given logistic-normal-ar1-miss0 age comp, explore recruitment and survival random effects #####
 
+m3_input <- prepare_wham_input(mt2023.modESS,
+                               age_comp = "logistic-normal-ar1-miss0")
 
+m3_input <- set_NAA(m3_input, NAA_re = list(sigma="rec+1",
+                                            cor="2dar1",
+                                            decouple_recruitment=TRUE))
+# m3 <- fit_wham(m3_input, do.osa=F, do.retro=F, do.fit=FALSE) 
+m3 <- fit_wham(m3_input, do.osa=F, do.retro=F, do.fit=TRUE, do.sdrep=TRUE) 
+check_convergence(m3)
+  m3$sdrep
+  m3$parList$logit_selpars
 
-
-
-
-
-
+### MGC was ok but hessian was not invertible
+  # Checked sdrep and all of the SEs are NA; Noticed huge estimates for some logit_selpars
+  # looked at parList$logit_selpars to see exactly which selectivity parameters are causing the problem 
+  
 
