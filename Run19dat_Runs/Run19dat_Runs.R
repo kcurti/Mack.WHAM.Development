@@ -14,6 +14,16 @@ require(tidyverse)
 
 rungroup.dir <- "Run19dat_Runs"
 
+
+### Source function to calculate uncertainty 
+
+source(file.path("R","calc_uncertainty_log_ests.R"))
+### Source function to extract time series estimates 
+source(file.path("R","extract_time_series_ests.R"))
+
+
+### ASAP Dat files
+
 # Read in 2023 ASAP file but with empirical CVs for all indices
 mt2023.emp <- read_asap3_dat("2023.MT.ASAP/ASAP.files/RUN19.dat")
 # Read in 2023 ASAP file used in final 2023MT run, modified to meet WHAM requirements
