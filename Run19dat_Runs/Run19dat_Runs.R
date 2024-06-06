@@ -142,11 +142,6 @@ m2.compare <- compare_wham_models(m2.list, calc.rho = TRUE, calc.aic=TRUE, fdir=
   print(m2.compare)
 m2_age.comps[m2.compare$best]
 
-# names(get(m2.compare$best)[['input']][['data']])
-# get(m2.compare$best)[['input']][['data']][['age_comp_model_fleets']]
-# get(m2.compare$best)[['input']][['data']][['age_comp_model_indices']]
-
-# Add in OSA residuals
 
 
 ##### M3: Selecting logistic-normal-ar1-miss0 age comp;  #####
