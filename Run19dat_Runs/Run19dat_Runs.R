@@ -12,23 +12,25 @@ library("wham", lib.loc = "C:/Users/Kiersten.Curti/AppData/Local/R/win-library/4
 library(kableExtra)
 require(tidyverse)
 
+rungroup.dir <- "Run19dat_Runs"
 
 # Read in 2023 ASAP file but with empirical CVs for all indices
-rungroup.dir <- "Run19dat_Runs"
-mt2023 <- read_asap3_dat("2023.MT.ASAP/ASAP.files/RUN19.dat")
+mt2023.emp <- read_asap3_dat("2023.MT.ASAP/ASAP.files/RUN19.dat")
+# Read in 2023 ASAP file used in final 2023MT run
+mt2023.orig <- read_asap3_dat("2023.MT.ASAP/ASAP.files/RUN9.dat")
 
-names(mt2023[[1]]) # one stock
-names(mt2023[[1]]$dat)
-mt2023[[1]]$dat$"index.names"
-age.vec <- as.character(1:mt2023[[1]]$dat$n_ages)
+names(mt2023.emp[[1]]) # one stock
+names(mt2023.emp[[1]]$dat)
+mt2023.emp[[1]]$dat$"index.names"
+age.vec <- as.character(1:mt2023.emp[[1]]$dat$n_ages)
 
 # Increase ESS
-mt2023.modESS <- mt2023
+mt2023.modESS <- mt2023.emp
 # Bigelow
 big <- mt2023.modESS[[1]]$dat$IAA_mats[[2]]
   colnames(big) <- c("Year","Value","CV",age.vec,"ESS")
 big[big[,"ESS"]>0,"ESS"] <- 1000
-# big <- as_tibble(mt2023[[1]]$dat$IAA_mats[[2]]) %>%
+# big <- as_tibble(mt2023.emp[[1]]$dat$IAA_mats[[2]]) %>%
 #   rename_with(~c("Year","Value","CV",age.vec,"ESS")) %>%
 #   mutate(ESS = if_else(ESS>0,1000,0))
 mt2023.modESS[[1]]$dat$IAA_mats[[2]] <- big
@@ -42,9 +44,24 @@ mt2023.modESS[[1]]$dat$catch_Neff[,] <- 1000
 
 
 
+# ##### M0: asap-like run with file from 2023 MT #####  !! ASK ALEX ABOUT THIS
+# 
+# m0.asap <- mt2023.orig
+# m0_input <- prepare_wham_input(m0.asap)
+# m0 <- fit_wham(m0_input, do.osa = F, do.retro = T)
+#   check_convergence(m0)
+# # Save output  
+# m0.dir <- file.path(rungroup.dir, "run0")
+#   if(!dir.exists(m0.dir)) {dir.create(m0.dir)}
+# 
+# plot_wham_output(m0, dir.main=file.path(getwd(),m0.dir))
+# saveRDS(m1, file=file.path(m1.dir, "m1.rds"))
+
+
+
 ##### M1: asap-like run but with original index CVs and slightly modified Bigelow selectivity #####
 
-m1.asap <- mt2023
+m1.asap <- mt2023.emp
 m1_input <- prepare_wham_input(m1.asap)
 m1_input$map$trans_NAA_rho
 # Correlation parameters for NAA random effects
@@ -55,7 +72,7 @@ m1_input$par$trans_NAA_rho
 
 # Run model
 m1_nofit <- fit_wham(m1_input, do.osa = F, do.retro = F, do.fit = F)
-m1 <- fit_wham(m1_input, do.osa = F, do.retro = T)
+m1 <- fit_wham(m1_input, do.osa = T, do.retro = T)
   check_convergence(m1)
 
 # Save output  
@@ -65,6 +82,8 @@ if(!dir.exists(m1.dir)) {dir.create(m1.dir)}
 plot_wham_output(m1, dir.main=file.path(getwd(),m1.dir))
 saveRDS(m1, file=file.path(m1.dir, "m1.rds"))
 
+# m1.compare <- compare_wham_models(list(m0=m0, m1=m1), calc.rho = TRUE, calc.aic=TRUE, fdir=file.path(getwd(),m1.dir))
+#   print(m1.compare)
 
 
 ##### M2: Loop over age-composition options #####
@@ -83,7 +102,8 @@ m2_age.comps <- c( "dir-mult",
                    "logistic-normal-pool0",
                    "dir-mult-linear" )
 m2_nmodels <- length(m2_age.comps)
-  
+names(m2_age.comps) <- paste("m2", 1:m2_nmodels, sep='.')
+
 # Prepare wham input using the asap file with modified ESS values
 # Test that modified ESS values inputted correctly
 m2_input <- prepare_wham_input(mt2023.modESS)
@@ -97,7 +117,7 @@ for(mod.no in 1:m2_nmodels)
   print(mod.no); print(agecomp.name)
   m2_input <- prepare_wham_input(mt2023.modESS,
                                  age_comp = agecomp.name)
-  m2 <- fit_wham(m2_input, do.osa=F, do.retro=T) 
+  m2 <- fit_wham(m2_input, do.osa=T, do.retro=T) 
   print(check_convergence(m2))
   
   m2.subdir <- file.path(m2.dir, agecomp.name)
@@ -107,12 +127,29 @@ for(mod.no in 1:m2_nmodels)
   saveRDS(m2, file=file.path(m2.subdir, "m2.rds"))
 }
 
+# Looping over age comps to read in m2 individual model fits for compare_wham
+m2.list <- list()
+for(mod.no in 1:m2_nmodels)
+{
+  agecomp.name <- m2_age.comps[mod.no]
+  print(mod.no); print(agecomp.name)
+  m2.subdir <- file.path(m2.dir, agecomp.name)
+  # assign(paste("m2", mod.no, sep='.'), readRDS(m2, file=file.path(m2.subdir, "m2.rds")))
+  m2.list[[names(agecomp.name)]] <- readRDS(m2, file=file.path(m2.subdir, "m2.rds"))
+}
+
+m2.compare <- compare_wham_models(m2.list, calc.rho = TRUE, calc.aic=TRUE, fdir=file.path(getwd(),m2.dir))
+  print(m2.compare)
+m2_age.comps[m2.compare$best]
+
+# names(get(m2.compare$best)[['input']][['data']])
+# get(m2.compare$best)[['input']][['data']][['age_comp_model_fleets']]
+# get(m2.compare$best)[['input']][['data']][['age_comp_model_indices']]
+
+# Add in OSA residuals
 
 
-                
-
-
-
+##### M3: Selecting logistic-normal-ar1-miss0 age comp;  #####
 
 
 
