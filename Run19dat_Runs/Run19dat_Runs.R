@@ -86,6 +86,7 @@ saveRDS(m1, file=file.path(m1.dir, "m1.rds"))
 #   print(m1.compare)
 
 
+
 ##### M2: Loop over age-composition options #####
 
 m2.dir <- file.path(rungroup.dir, "run2")
@@ -142,9 +143,15 @@ m2.compare <- compare_wham_models(m2.list, calc.rho = TRUE, calc.aic=TRUE, fdir=
   print(m2.compare)
 m2_age.comps[m2.compare$best]
 
+##### ***Selecting logistic-normal-ar1-miss0 age comp #####
 
 
-##### M3: Selecting logistic-normal-ar1-miss0 age comp;  #####
+##### M3: Given logistic-normal-ar1-miss0 age comp, looping over random effects  #####
+# A priori, could be random effects in 1) recruitment
+#                                      2) NAA
+#                                      3) Fishery selectivity
+#                                      4) Index catchability
+#                                      5) Index selectivity (though estimability questionable)
 
 
 
