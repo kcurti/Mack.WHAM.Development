@@ -16,8 +16,11 @@ rungroup.dir <- "Run19dat_Runs"
 
 # Read in 2023 ASAP file but with empirical CVs for all indices
 mt2023.emp <- read_asap3_dat("2023.MT.ASAP/ASAP.files/RUN19.dat")
-# Read in 2023 ASAP file used in final 2023MT run
-mt2023.orig <- read_asap3_dat("2023.MT.ASAP/ASAP.files/RUN9.dat")
+# Read in 2023 ASAP file used in final 2023MT run, modified to meet WHAM requirements
+mt2023.orig <- read_asap3_dat("2023.MT.ASAP/ASAP.files/RUN9_For_WHAM.dat")
+# Read in 2023 ASAP results
+mt2023.ests <- read_csv("2023.MT.ASAP/ASAP.files/ASAP_summary_Run9.MCMC.csv")
+
 
 names(mt2023.emp[[1]]) # one stock
 names(mt2023.emp[[1]]$dat)
@@ -57,6 +60,8 @@ m0.dir <- file.path(rungroup.dir, "run0")
 plot_wham_output(m0, dir.main=file.path(getwd(),m0.dir))
 saveRDS(m0, file=file.path(m0.dir, "m0.rds"))
 
+# Compare to ASAP output
+
 
 
 ##### M1: asap-like run but with original index CVs and slightly modified Bigelow selectivity #####
@@ -82,8 +87,8 @@ if(!dir.exists(m1.dir)) {dir.create(m1.dir)}
 plot_wham_output(m1, dir.main=file.path(getwd(),m1.dir))
 saveRDS(m1, file=file.path(m1.dir, "m1.rds"))
 
-# m1.compare <- compare_wham_models(list(m0=m0, m1=m1), calc.rho = TRUE, calc.aic=TRUE, fdir=file.path(getwd(),m1.dir))
-#   print(m1.compare)
+m1.compare <- compare_wham_models(list(m0=m0, m1=m1), calc.rho = TRUE, calc.aic=TRUE, fdir=file.path(getwd(),m1.dir))
+  print(m1.compare)
 
 
 
@@ -152,7 +157,7 @@ m2_age.comps[m2.compare$best]
 #                                      3) Fishery selectivity
 #                                      4) Index catchability
 #                                      5) Index selectivity (though estimability questionable)
-
+# model_name="Run18_ASAP_like"
 
 
 
