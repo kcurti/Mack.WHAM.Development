@@ -15,11 +15,14 @@ require(tidyverse)
 rungroup.dir <- "Run19dat_Runs"
 
 
-### Source function to calculate uncertainty 
 
+### Source required functions
+
+# Function to calculate uncertainty
 source(file.path("R","calc_uncertainty_log_ests.R"))
-### Source function to extract time series estimates 
+# Function to extract time series estimates 
 source(file.path("R","extract_time_series_ests.R"))
+
 
 
 ### ASAP Dat files
@@ -28,9 +31,6 @@ source(file.path("R","extract_time_series_ests.R"))
 mt2023.emp <- read_asap3_dat("2023.MT.ASAP/ASAP.files/RUN19.dat")
 # Read in 2023 ASAP file used in final 2023MT run, modified to meet WHAM requirements
 mt2023.orig <- read_asap3_dat("2023.MT.ASAP/ASAP.files/RUN9_For_WHAM.dat")
-# Read in 2023 ASAP results
-mt2023.ests <- read_csv("2023.MT.ASAP/ASAP.files/ASAP_summary_Run9.MCMC.csv")
-
 
 names(mt2023.emp[[1]]) # one stock
 names(mt2023.emp[[1]]$dat)
@@ -57,7 +57,7 @@ mt2023.modESS[[1]]$dat$catch_Neff[,] <- 1000
 
 
 
-# ##### M0: asap-like run with file from 2023 MT #####  !! ASK ALEX ABOUT THIS
+# ##### M0: asap-like run with file from 2023 MT #####
 
 m0.asap <- mt2023.orig
 m0_input <- prepare_wham_input(m0.asap)
@@ -71,7 +71,8 @@ plot_wham_output(m0, dir.main=file.path(getwd(),m0.dir))
 saveRDS(m0, file=file.path(m0.dir, "m0.rds"))
 
 # Compare to ASAP output
-
+m0.ests <- extract_time_series_ests(m0.dir, "m0.rds")
+  
 
 
 ##### M1: asap-like run but with original index CVs and slightly modified Bigelow selectivity #####
@@ -159,6 +160,7 @@ m2.compare <- compare_wham_models(m2.list, calc.rho = TRUE, calc.aic=TRUE, fdir=
 m2_age.comps[m2.compare$best]
 
 ##### ***Selecting logistic-normal-ar1-miss0 age comp #####
+
 
 
 ##### M3: Given logistic-normal-ar1-miss0 age comp, looping over random effects  #####
