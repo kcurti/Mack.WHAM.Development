@@ -16,7 +16,7 @@ compare_asap_wham_ests <- function(asap.ests, wham.ests, output.dir)
                              .id = "Model")
   
   # Plot
-  windows()
+  # windows()
   # par(mfrow=c(3,1))
   combined.ests %>% ggplot(aes(Year, est)) +
     geom_line(aes(color=Model)) +
