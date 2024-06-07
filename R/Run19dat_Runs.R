@@ -100,6 +100,19 @@ compare_asap_wham_ests(mt2023.ests, run0.ests, file.path(run0.dir, "Comparison.f
 run0.sel <- run0$rep$selAA
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 ##### M1: asap-like run but with original index CVs and slightly modified Bigelow selectivity #####
 
 m1.asap <- mt2023.emp
