@@ -72,21 +72,21 @@ mt2023.modESS[[1]]$dat$catch_Neff[,] <- 1000
 
 
 
-# ##### M0: asap-like run with file from 2023 MT #####
+# ##### Run0: asap-like run with file from 2023 MT #####
 
-m0.asap <- mt2023.orig
-m0_input <- prepare_wham_input(m0.asap)
-m0 <- fit_wham(m0_input, do.osa = F, do.retro = T)
-  check_convergence(m0)
+run0.asap <- mt2023.orig
+run0.input <- prepare_wham_input(run0.asap)
+run0 <- fit_wham(run0.input, do.osa = F, do.retro = T)
+  check_convergence(run0)
 # Save output
-m0.dir <- file.path(rungroup.dir, "run0")
-  if(!dir.exists(m0.dir)) {dir.create(m0.dir)}
+run0.dir <- file.path(rungroup.dir, "run0")
+  if(!dir.exists(run0.dir)) {dir.create(run0.dir)}
 
-plot_wham_output(m0, dir.main=file.path(getwd(),m0.dir))
-saveRDS(m0, file=file.path(m0.dir, "m0.rds"))
+plot_wham_output(run0, dir.main=file.path(getwd(),run0.dir))
+saveRDS(run0, file=file.path(run0.dir, "run0.rds"))
 
 # Extract time series estimates for comparison to ASAP output
-m0.ests <- extract_time_series_ests(m0.dir, "m0.rds")
+run0.ests <- extract_time_series_ests(run0.dir, "run0.rds")
   
 # Import ASAP output
 asap.dir <- "2023.MT.ASAP/ASAP.files/"
@@ -94,8 +94,10 @@ asap.ests.csv.fname <- "ASAP_summary_Run9.MCMC.csv"
 mt2023.ests <- import_asap_ests(asap.dir, asap.ests.csv.fname)
   
 # Compare WHAM run to ASAP output
-compare_asap_wham_ests(mt2023.ests, m0.ests, file.path(m0.dir, "Comparison.figures")) 
+compare_asap_wham_ests(mt2023.ests, run0.ests, file.path(run0.dir, "Comparison.figures")) 
 
+# Look at selectivity estimates
+run0.sel <- run0$rep$selAA
 
 
 ##### M1: asap-like run but with original index CVs and slightly modified Bigelow selectivity #####
@@ -121,7 +123,7 @@ if(!dir.exists(m1.dir)) {dir.create(m1.dir)}
 plot_wham_output(m1, dir.main=file.path(getwd(),m1.dir))
 saveRDS(m1, file=file.path(m1.dir, "m1.rds"))
 
-m1.compare <- compare_wham_models(list(m0=m0, m1=m1), calc.rho = TRUE, calc.aic=TRUE, fdir=file.path(getwd(),m1.dir))
+m1.compare <- compare_wham_models(list(run0=run0, m1=m1), calc.rho = TRUE, calc.aic=TRUE, fdir=file.path(getwd(),m1.dir))
   print(m1.compare)
 
 
