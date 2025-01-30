@@ -238,9 +238,93 @@ ls()
 
 
 
-##### Run3:  #####
+##### Run3: Fix all Bigelow selectivity parameters to see if can resolve remaining differences ##### 
 
 run.name <- 'run3'
+
+# Create wham input object
+run3.sel.spec=list(model=c("age-specific",  # Fishery
+                           "age-specific",  # SSB egg index
+                           "age-specific",  # Bigelow
+                           "age-specific"), # Albatross
+                   initial_pars=list(c(0.1,0.5,0.8,1,1,1,1,1,1,1),
+                                     c(1,1,1,1,1,1,1,1,1,1),
+                                     c(0, 0, 1, mt2023.sel.index.values[2,4:7], 0, 0, 0),
+                                     c(0, 0, 1, 0.6, 0.4, 0.3, 0.3, 0.2, mt2023.sel.index.values[3,9:10])),
+                   fix_pars = list(
+                     c(6:10),
+                     c(1:10),
+                     c(1:10),
+                     c(1:3,9:10))
+) 
+run.input <- prepare_wham_input(mt2023.orig, selectivity = run3.sel.spec)
+
+# Fit wham model
+run.fit <- fit_wham(run.input, do.osa = F, do.retro = F)
+check_convergence(run.fit)
+
+# Create run directory
+run.dir <- file.path(group.dir, run.name)
+if(!dir.exists(run.dir)) {dir.create(run.dir)}
+
+# Plot and save output
+plot_wham_output(run.fit, dir.main=file.path(getwd(),run.dir))
+run.rds.name <- paste(run.name,"rds",sep='.')
+saveRDS(run.fit, file=file.path(run.dir, run.rds.name))
+
+# Extract time series estimates for comparison to ASAP output
+run.ests <- extract_time_series_ests(run.dir, run.rds.name)
+
+# Compare WHAM run to ASAP output
+compare_asap_wham_ests(mt2023.ests, run.ests, file.path(run.dir, "Comparison.figures")) 
+
+# Assign generic objects to run-specific permanent objects
+assign(paste(run.name,"input",sep='.'), run.input)
+assign(paste(run.name,"fit",sep='.'), run.fit)
+assign(paste(run.name,"ests",sep='.'), run.ests)
+
+# # Look at selectivity estimates
+run3.sel <- run3.fit$rep$selAA
+run3.sel[[1]][1,] # Fishery
+run3.sel[[3]][1,] # Big
+run3.sel[[4]][1,] # Alb
+# 
+# Output resulting estimates to csv
+write_csv(run.ests, file.path(run.dir, paste(run.name,"ests.csv",sep='.')))
+
+# Remove generic run objects except run.name and run.dir
+rm(run.input, run.fit, run.rds.name, run.ests)
+
+# Save image
+save.image(file.path(run.dir, paste(run.name,"RDATA",sep='.')))
+
+# Remove all remaining objects associated with run
+rm(list=ls()[grep("^run.",ls())])
+ls()
+
+
+
+##### Comparison: Runs 2 and 3 ##### 
+
+run.list <- c('run2', 'run3')
+
+# Load runs
+for (run.name in run.list)
+{
+  # run.name <- 'run1'
+  assign(paste(run.name,"fit",sep='.'),
+         readRDS(file=file.path(file.path(group.dir, run.name), paste(run.name,"rds",sep='.')))
+  )
+}
+
+# Plot 
+compare_wham_models(list(run2.fit, run3.fit), fdir=file.path(file.path(group.dir, tail(run.list,1)), "Comparison.figures"))
+
+# get(paste(run.list, "fit", sep="."))
+
+# Remove all remaining objects associated with run
+rm(list=ls()[grep("^run.",ls())])
+ls()
 
 
 
