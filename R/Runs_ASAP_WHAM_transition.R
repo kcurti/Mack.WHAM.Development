@@ -205,10 +205,24 @@ rm(list=ls()[grep("^run.",ls())])
 ls()
 
 
-#####
 
 
+##### Comparison: Runs 1 and 2 ##### 
 
-# Compare 
-compare_wham_models(list(run1, run2), fdir=file.path(run2.dir, "Comparison.figures"))
+# Load runs
+run.name <- 'run1'
+assign(paste(run.name,"fit",sep='.'),
+       readRDS(file=file.path(file.path(group.dir, run.name), paste(run.name,"rds",sep='.')))
+)
+run.name <- 'run2'
+assign(paste(run.name,"fit",sep='.'),
+       readRDS(file=file.path(file.path(group.dir, run.name), paste(run.name,"rds",sep='.')))
+)
+
+# Plot 
+compare_wham_models(list(run1.fit, run2.fit), fdir=file.path(file.path(group.dir, 'run2'), "Comparison.figures"))
+
+# Remove all remaining objects associated with run
+rm(list=ls()[grep("^run.",ls())])
+ls()
 
