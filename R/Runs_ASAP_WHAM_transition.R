@@ -1,4 +1,4 @@
-### Runs to transition from ASAP to WHAM
+##### Runs to transition from ASAP to WHAM #####
 
 library("wham", lib.loc = "C:/Users/Kiersten.Curti/AppData/Local/R/win-library/4.4/wham_168117c")
 library(kableExtra)
@@ -50,6 +50,12 @@ mt2023.sel.index.phase <- lapply(split(mt2023.rdat$sel.input.mats$index.sel.ini[
 # ASAP index selectivity estimates
 mt2023.sel.index.values <- mt2023.rdat$index.sel
 
+# ASAP fleet selectivity (time-invariant)
+mt2023.sel.fishery.values <- mt2023.rdat$fleet.sel.mats[[1]][1,]
+
+# ASAP catchability estimates
+mt2023.q <- mt2023.rdat$q.indices
+
 
 
 ##### Alex's SSRT Run1 outputs #####
@@ -62,6 +68,8 @@ ssrt_run1.NAA <- readRDS(file.path(ssrt_run1.dir, "res_tables", "NAA_table.RDS")
 dim(ssrt_run1.NAA)
 
 # 21 objects
+
+
 
 ##### Run1: asap-like run with file from 2023 MT #####
 
@@ -200,6 +208,11 @@ rm(run.input, run.fit, run.rds.name, run.ests)
 # Save image
 save.image(file.path(run.dir, paste(run.name,"RDATA",sep='.')))
 
+### Compare (again) selectivity ests with those from MT - doesn't seem to be a smoking gun
+run2.sel[[1]][1,] # Fishery
+run2.sel[[3]][1,] # Big
+run2.sel[[4]][1,] # Alb
+
 # Remove all remaining objects associated with run
 rm(list=ls()[grep("^run.",ls())])
 ls()
@@ -208,29 +221,25 @@ ls()
 #   1) Run 2 is still different than ASAP output but much better than run 1
 #   2) Run 2 is also still different than SSRT run 1, though Alex changed the ESS's in SSRT run 1
 
-### Compare (again) selectivity ests with those from MT - doesn't seem to be a smoking gun
-run2.sel[[1]][1,] # Fishery
-run2.sel[[3]][1,] # Big
-run2.sel[[4]][1,] # Alb
-
-mt2023.rdat$fleet.sel.mats[[1]][1,]
-mt2023.sel.index.values
 
 
 ##### Comparison: Runs 1 and 2 ##### 
 
-# Load runs
-run.name <- 'run1'
-assign(paste(run.name,"fit",sep='.'),
-       readRDS(file=file.path(file.path(group.dir, run.name), paste(run.name,"rds",sep='.')))
-)
-run.name <- 'run2'
-assign(paste(run.name,"fit",sep='.'),
-       readRDS(file=file.path(file.path(group.dir, run.name), paste(run.name,"rds",sep='.')))
-)
+run.list <- c('run1', 'run2')
+comp.name <- 'runs_1.2'
 
-# Plot 
-compare_wham_models(list(run1.fit, run2.fit), fdir=file.path(file.path(group.dir, 'run2'), "Comparison.figures"))
+# Load runs and save to list
+run.fits.list <- list()
+for (run.name in run.list)
+{
+  # run.name <- 'run1'
+  run.fits.list[[run.name]] <- readRDS(file=file.path(file.path(group.dir, run.name), paste(run.name,"rds",sep='.')))
+}
+
+# Create comparison diretory and plot 
+comp.dir <- file.path(group.dir, tail(run.list,1), "Comparison.figures", comp.name)
+if(!dir.exists(comp.dir)) {dir.create(comp.dir)}
+compare_wham_models(run.fits.list, fdir=comp.dir)
 
 # Remove all remaining objects associated with run
 rm(list=ls()[grep("^run.",ls())])
@@ -288,7 +297,10 @@ run3.sel <- run3.fit$rep$selAA
 run3.sel[[1]][1,] # Fishery
 run3.sel[[3]][1,] # Big
 run3.sel[[4]][1,] # Alb
-# 
+
+# Look at catchability estimates
+run3.fit$rep$q
+
 # Output resulting estimates to csv
 write_csv(run.ests, file.path(run.dir, paste(run.name,"ests.csv",sep='.')))
 
@@ -307,20 +319,20 @@ ls()
 ##### Comparison: Runs 2 and 3 ##### 
 
 run.list <- c('run2', 'run3')
+comp.name <- 'runs_2.3'
 
-# Load runs
+# Load runs and save to list
+run.fits.list <- list()
 for (run.name in run.list)
 {
   # run.name <- 'run1'
-  assign(paste(run.name,"fit",sep='.'),
-         readRDS(file=file.path(file.path(group.dir, run.name), paste(run.name,"rds",sep='.')))
-  )
+  run.fits.list[[run.name]] <- readRDS(file=file.path(file.path(group.dir, run.name), paste(run.name,"rds",sep='.')))
 }
 
-# Plot 
-compare_wham_models(list(run2.fit, run3.fit), fdir=file.path(file.path(group.dir, tail(run.list,1)), "Comparison.figures"))
-
-# get(paste(run.list, "fit", sep="."))
+# Create comparison diretory and plot 
+comp.dir <- file.path(group.dir, tail(run.list,1), "Comparison.figures", comp.name)
+if(!dir.exists(comp.dir)) {dir.create(comp.dir)}
+compare_wham_models(run.fits.list, fdir=comp.dir)
 
 # Remove all remaining objects associated with run
 rm(list=ls()[grep("^run.",ls())])
@@ -331,11 +343,11 @@ ls()
 
 
 
-
 ##### Code to load saved workspace #####
 
-run.name <- 'run2'
+run.name <- 'run1'
 
+group.dir <- "Runs.ASAP.WHAM.Transition"
 run.dir <- file.path(group.dir, run.name)
 load(file.path(run.dir, paste(run.name,"RDATA",sep='.')))
 
