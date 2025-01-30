@@ -48,3 +48,4 @@ po/*~
 # RStudio Connect folder
 rsconnect/
 Runs.ASAP.WHAM.Transition/run1/run1.RDATA
+*.RDATA
