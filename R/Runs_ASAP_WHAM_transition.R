@@ -204,7 +204,17 @@ save.image(file.path(run.dir, paste(run.name,"RDATA",sep='.')))
 rm(list=ls()[grep("^run.",ls())])
 ls()
 
+### Take-home points
+#   1) Run 2 is still different than ASAP output but much better than run 1
+#   2) Run 2 is also still different than SSRT run 1, though Alex changed the ESS's in SSRT run 1
 
+### Compare (again) selectivity ests with those from MT - doesn't seem to be a smoking gun
+run2.sel[[1]][1,] # Fishery
+run2.sel[[3]][1,] # Big
+run2.sel[[4]][1,] # Alb
+
+mt2023.rdat$fleet.sel.mats[[1]][1,]
+mt2023.sel.index.values
 
 
 ##### Comparison: Runs 1 and 2 ##### 
@@ -225,4 +235,24 @@ compare_wham_models(list(run1.fit, run2.fit), fdir=file.path(file.path(group.dir
 # Remove all remaining objects associated with run
 rm(list=ls()[grep("^run.",ls())])
 ls()
+
+
+
+##### Run3:  #####
+
+run.name <- 'run3'
+
+
+
+
+
+
+
+##### Code to load saved workspace #####
+
+run.name <- 'run2'
+
+run.dir <- file.path(group.dir, run.name)
+load(file.path(run.dir, paste(run.name,"RDATA",sep='.')))
+
 
