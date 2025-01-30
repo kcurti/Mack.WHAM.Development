@@ -112,12 +112,17 @@ run1.NAA.diff <- run1.NAA - ssrt_run1.NAA
   head(run1.NAA)
   head(ssrt_run1.NAA)
 
+  
+# Output resulting estimates to csv
+write_csv(run.ests, file.path(run.dir, paste(run.name,"ests.csv",sep='.')))
+  
 # Remove all generic run objects except run.name  
 rm(run.input, run.fit, run.rds.name, run.ests)
 #rm(list=ls()[grep("^run.",ls())])
 
 # Save image
 save.image(file.path(run.dir, paste(run.name,"RDATA",sep='.')))
+
 
 
 ### Take-home points
