@@ -41,10 +41,10 @@ mt2023.orig[[1]]$dat$"index.names"
 mt2023.init.sel.fish <- as_tibble(mt2023.rdat$sel.input.mats$fleet.sel.ini[,1]) %>% filter(value>0) 
 
 # Total number of initial index selectivity parameters, initial values and phases from ASAP
-ninit.indexsel <- length(mt2023.rdat$sel.input.mats$index.sel.ini[,2])/length(index.names)
-mt2023.sel.index.init <- lapply(split(mt2023.rdat$sel.input.mats$index.sel.ini[,1], rep(1:3, each=ninit.indexsel)),
+mt2023.ninit.indexsel <- length(mt2023.rdat$sel.input.mats$index.sel.ini[,2])/length(index.names)
+mt2023.sel.index.init <- lapply(split(mt2023.rdat$sel.input.mats$index.sel.ini[,1], rep(1:3, each=mt2023.ninit.indexsel)),
                                 as_tibble)
-mt2023.sel.index.phase <- lapply(split(mt2023.rdat$sel.input.mats$index.sel.ini[,2], rep(1:3, each=ninit.indexsel)),
+mt2023.sel.index.phase <- lapply(split(mt2023.rdat$sel.input.mats$index.sel.ini[,2], rep(1:3, each=mt2023.ninit.indexsel)),
                                 as_tibble)
 
 # ASAP index selectivity estimates
@@ -61,52 +61,68 @@ dim(ssrt_run1.params)
 ssrt_run1.NAA <- readRDS(file.path(ssrt_run1.dir, "res_tables", "NAA_table.RDS"))
 dim(ssrt_run1.NAA)
 
-
+# 21 objects
 
 ##### Run1: asap-like run with file from 2023 MT #####
 
-run1.asap <- mt2023.orig
-run1.input <- prepare_wham_input(run1.asap)
-run1 <- fit_wham(run1.input, do.osa = F, do.retro = T)
-check_convergence(run1)
-# Save output
-run1.dir <- file.path(rungroup.dir, "run1")
-if(!dir.exists(run1.dir)) {dir.create(run1.dir)}
+run.name <- 'run1'
 
-plot_wham_output(run1, dir.main=file.path(getwd(),run1.dir))
-saveRDS(run1, file=file.path(run1.dir, "run1.rds"))
+# Create wham input object
+run.input <- prepare_wham_input(mt2023.orig)
+
+# Fit wham model
+run.fit <- fit_wham(run.input, do.osa = F, do.retro = F)
+check_convergence(run.fit)
+
+# Create run directory
+run.dir <- file.path(rungroup.dir, run.name)
+if(!dir.exists(run.dir)) {dir.create(run.dir)}
+
+# Plot and save output
+plot_wham_output(run.fit, dir.main=file.path(getwd(),run.dir))
+run.rds.name <- paste(run.name,"rds",sep='.')
+saveRDS(run.fit, file=file.path(run.dir, run.rds.name))
 
 # Extract time series estimates for comparison to ASAP output
-run1.ests <- extract_time_series_ests(run1.dir, "run1.rds")
+run.ests <- extract_time_series_ests(run.dir, run.rds.name)
 
 # Compare WHAM run to ASAP output
-compare_asap_wham_ests(mt2023.ests, run1.ests, file.path(run1.dir, "Comparison.figures")) 
+compare_asap_wham_ests(mt2023.ests, run.ests, file.path(run.dir, "Comparison.figures")) 
+
+# Assign generic objects to run-specific permanent objects
+assign(paste(run.name,"input",sep='.'), run.input)
+assign(paste(run.name,"fit",sep='.'), run.fit)
+assign(paste(run.name,"ests",sep='.'), run.ests)
 
 # Look at selectivity estimates
-run1.sel <- run1$rep$selAA
+run1.sel <- run1.fit$rep$selAA
 run1.sel[[1]][1,] # Fishery
 run1.sel[[3]][1,] # Big
 run1.sel[[4]][1,] # Alb
 
-dim(run1$report()$NAA)
-run1.NAA <- run1$report()$NAA[1,1,,]
-dim(run1.NAA)
-head(run1.NAA)
+# Extract NAA
+  dim(run1.fit$report()$NAA)
+run1.NAA <- run1.fit$report()$NAA[1,1,,]
+  dim(run1.NAA)
+  head(run1.NAA)
 
+# Compare Run1 NAA to SSRT Run1 NAA - there are differences :(
+run1.NAA.diff <- run1.NAA - ssrt_run1.NAA
+  head(run1.NAA.diff)
+  head(run1.NAA)
+  head(ssrt_run1.NAA)
 
-# Compare my Run1 NAA to SSRT Run1 NAA - there are differences :(
-diff_run1.NAA <- run1.NAA - ssrt_run1.NAA
-head(diff_run1.NAA)
-head(run1.NAA)
-head(ssrt_run1.NAA)
+# Remove all generic run objects except run.name  
+rm(run.input, run.fit, run.rds.name, run.ests)
+#rm(list=ls()[grep("^run.",ls())])
 
+# Save image
+save.image(file.path(run.dir, paste(run.name,"RDATA",sep='.')))
 
-
-rm(list=ls()[grep("^asap",ls())])
 
 ### Take-home points
-#   1) My run 1 is different than ASAP output
-#   2) My run 1 is also different than Alex's run 1, though Alex changed the ESS's in Run1
+#   1) Run 1 is different than ASAP output
+#   2) Run 1 is also different than SSRT run 1, though Alex changed the ESS's in SSRT run 1
 
 
 
