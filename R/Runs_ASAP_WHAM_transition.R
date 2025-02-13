@@ -1,7 +1,7 @@
 ##### Runs to transition from ASAP to WHAM #####
 
 ##### Ideas #####
-#  Rerun Alex’s SSRT Run1 so that can directly compare single and multi wham
+#  Compare my run 7 to Alex's Run 2 using the compare_wham function
 
 
 library("wham", lib.loc = "C:/Users/Kiersten.Curti/AppData/Local/R/win-library/4.4/wham_168117c")
