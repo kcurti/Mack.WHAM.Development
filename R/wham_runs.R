@@ -9,8 +9,9 @@
 # time varying NAA
 
 #### load packages & data ####
-devtools::install_github("timjmiller/wham", dependencies=TRUE, ref="devel")
-require(wham)
+#devtools::install_github("timjmiller/wham", dependencies=TRUE, ref="devel")
+library(wham, lib.loc = "C:/Users/alex.hansell/AppData/Local/Programs/R/R-4.2.2/library/wham/")
+
 require(tidyverse)
 require(here)
 require(ggplot2)
@@ -1609,9 +1610,26 @@ compare_wham_models(mods)
 m13 <- readRDS("~/GitHub/Mack.WHAM.2021MT/Runs/run13/m13.rds")
 
 # extract R sigma estimates for Liz
-m13$sdrep$par.fixed[(names(m13$sdrep$par.fixed)=="log_NAA_sigma")]
-m13$sdrep$par.fixed[(names(m13$sdrep$par.fixed)=="trans_NAA_rho")]
+r29$sdrep$par.fixed[(names(r29$sdrep$par.fixed)=="log_NAA_sigma")]
+r29$sdrep$par.fixed[(names(r29$sdrep$par.fixed)=="trans_ecov_rho")]
 
+names(r29$sdrep$par.fixed)
+
+r33$sdrep$par.fixed[(names(r33$sdrep$par.fixed)=="Ecov_beta")]
+
+r33$sdrep$par.fixed[(names(r33$sdrep$par.fixed)=="Ecov_process_pars")]
+
+r33$sdrep$par.fixed[(names(r33$sdrep$par.fixed)=="Ecov_obs_logsigma")]
+
+r33$sdrep$par.fixed[(names(r33$sdrep$par.fixed)=="mean_rec_pars")]
+
+exp(6.842681)
+
+"mean_rec_pars"
+exp(-1.890472)
+
+"Ecov_beta"         "Ecov_process_pars" "Ecov_process_pars"
+[85] "Ecov_obs_logsigma"
 
 proj1 <- project_wham(m13, proj.opts  = list(n.yrs = 4,
                                              #use.FXSPR = TRUE,
