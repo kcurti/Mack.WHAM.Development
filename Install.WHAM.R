@@ -1,6 +1,8 @@
 ### Install a specific commit of WHAM, hopefully using Pak
 
 
+Abbreviated Commit numbers are the first 7 numbers of the full commit number
+
 ### Option 1: Pak
 
 # Install "pak" package if not already installd
@@ -40,5 +42,21 @@ library("wham", lib.loc = "C:/Users/Kiersten.Curti/AppData/Local/R/win-library/4
 
 ### If need to remove a package
 # remove.packages("TMB")
+
+
+### Larry's install
+# Install "pak" package if not already installed
+install.packages("pak")
+
+
+.libPaths()
+pak::pkg_install("timjmiller/wham@c9983ff", lib="C:/Users/larry.alade/AppData/Local/Programs/R/R-4.4.0/library/wham_c9983ff")
+
+library("wham", lib.loc = "C:/Users/larry.alade/AppData/Local/Programs/R/R-4.4.0/library/wham_c9983ff")
+.libPaths( c( .libPaths(), "C:/Users/larry.alade/AppData/Local/Programs/R/R-4.4.0/library/wham_c9983ff") )
+
+
+pak::pkg_install("timjmiller/wham@6146b5d", lib="C:/Users/Kiersten.Curti/AppData/Local/R/win-library/4.4/wham_6146b5d")
+library("wham", lib.loc = "C:/Users/Kiersten.Curti/AppData/Local/R/win-library/4.4/wham_6146b5d")
 
 
